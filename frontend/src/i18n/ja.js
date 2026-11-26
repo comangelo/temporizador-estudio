@@ -233,6 +233,8 @@ const d = {
   layout_semaforo_desc: "画面全体の色が変わる",
   layout_classic: "クラシック",
   layout_classic_desc: "いつもの表示",
+  layout_ring: "リング",
+  layout_ring_desc: "スマホアプリ風、時間のリング付き",
   language: "言語",
   pmWarnPrefix: "あと",
   pmWarnSuffix: "で終了",

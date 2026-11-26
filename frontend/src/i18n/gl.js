@@ -337,6 +337,8 @@ const gl = {
   layout_semaforo_desc: "Toda a pantalla cambia de cor",
   layout_classic: "Clásico",
   layout_classic_desc: "O deseño de sempre",
+  layout_ring: "Anel",
+  layout_ring_desc: "Estilo de app do móbil, cun anel de tempo",
   language: "Idioma",
   pmWarnPrefix: "EN",
   pmWarnSuffix: "DEBE CONCLUÍR",

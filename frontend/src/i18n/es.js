@@ -337,6 +337,8 @@ const es = {
   layout_semaforo_desc: "Toda la pantalla cambia de color",
   layout_classic: "Clásico",
   layout_classic_desc: "El diseño de siempre",
+  layout_ring: "Anillo",
+  layout_ring_desc: "Estilo de app del móvil, con un anillo de tiempo",
   language: "Idioma",
   pmWarnPrefix: "EN",
   pmWarnSuffix: "DEBE CONCLUIR",

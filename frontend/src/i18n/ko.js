@@ -233,6 +233,8 @@ const d = {
   layout_semaforo_desc: "화면 전체의 색이 바뀜",
   layout_classic: "클래식",
   layout_classic_desc: "기존 디자인",
+  layout_ring: "링",
+  layout_ring_desc: "휴대폰 앱 스타일, 시간 링 포함",
   language: "언어",
   pmWarnPrefix: "",
   pmWarnSuffix: "후 마쳐야 함",

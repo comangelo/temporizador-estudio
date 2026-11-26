@@ -337,6 +337,8 @@ const d = {
   layout_semaforo_desc: "Het hele scherm verandert van kleur",
   layout_classic: "Klassiek",
   layout_classic_desc: "De vertrouwde opmaak",
+  layout_ring: "Ring",
+  layout_ring_desc: "Zoals een telefoonapp, met een tijdring",
   language: "Taal",
   pmWarnPrefix: "OVER",
   pmWarnSuffix: "AFRONDEN",

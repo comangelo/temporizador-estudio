@@ -348,6 +348,8 @@ const d = {
   layout_semaforo_desc: "Tot ecranul își schimbă culoarea",
   layout_classic: "Clasic",
   layout_classic_desc: "Aspectul obișnuit",
+  layout_ring: "Inel",
+  layout_ring_desc: "Stil de aplicație de telefon, cu un inel de timp",
   language: "Limbă",
   pmWarnPrefix: "ÎN",
   pmWarnSuffix: "TREBUIE SĂ ÎNCHEI",

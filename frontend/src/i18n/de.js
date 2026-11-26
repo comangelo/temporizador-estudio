@@ -337,6 +337,8 @@ const d = {
   layout_semaforo_desc: "Der ganze Bildschirm wechselt die Farbe",
   layout_classic: "Klassisch",
   layout_classic_desc: "Das bisherige Layout",
+  layout_ring: "Ring",
+  layout_ring_desc: "Wie eine Handy-App, mit einem Zeitring",
   language: "Sprache",
   pmWarnPrefix: "ENDE IN",
   pmWarnSuffix: "",

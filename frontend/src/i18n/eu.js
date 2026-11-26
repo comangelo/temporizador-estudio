@@ -337,6 +337,8 @@ const eu = {
   layout_semaforo_desc: "Pantaila osoak kolorea aldatzen du",
   layout_classic: "Klasikoa",
   layout_classic_desc: "Betiko diseinua",
+  layout_ring: "Eraztuna",
+  layout_ring_desc: "Mugikorreko aplikazioaren itxura, denbora-eraztun batekin",
   language: "Hizkuntza",
   pmWarnPrefix: "",
   pmWarnSuffix: "BARRU AMAITU BEHAR DA",

@@ -337,6 +337,8 @@ const ca = {
   layout_semaforo_desc: "Tota la pantalla canvia de color",
   layout_classic: "Clàssic",
   layout_classic_desc: "El disseny de sempre",
+  layout_ring: "Anell",
+  layout_ring_desc: "Estil d’app del mòbil, amb un anell de temps",
   language: "Idioma",
   pmWarnPrefix: "EN",
   pmWarnSuffix: "HA D'ACABAR",

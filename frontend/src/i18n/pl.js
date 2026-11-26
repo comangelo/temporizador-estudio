@@ -359,6 +359,8 @@ const d = {
   layout_semaforo_desc: "Cały ekran zmienia kolor",
   layout_classic: "Klasyczny",
   layout_classic_desc: "Dotychczasowy układ",
+  layout_ring: "Pierścień",
+  layout_ring_desc: "Wygląd aplikacji na telefon, z pierścieniem czasu",
   language: "Język",
   pmWarnPrefix: "ZA",
   pmWarnSuffix: "ZAKOŃCZ",

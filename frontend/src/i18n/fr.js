@@ -337,6 +337,8 @@ const d = {
   layout_semaforo_desc: "Tout l’écran change de couleur",
   layout_classic: "Classique",
   layout_classic_desc: "La disposition habituelle",
+  layout_ring: "Anneau",
+  layout_ring_desc: "Style d’app mobile, avec un anneau de temps",
   language: "Langue",
   pmWarnPrefix: "FIN DANS",
   pmWarnSuffix: "",

@@ -337,6 +337,8 @@ const d = {
   layout_semaforo_desc: "The whole screen changes colour",
   layout_classic: "Classic",
   layout_classic_desc: "The usual layout",
+  layout_ring: "Ring",
+  layout_ring_desc: "Phone app style, with a time ring",
   language: "Language",
   pmWarnPrefix: "MUST END IN",
   pmWarnSuffix: "",

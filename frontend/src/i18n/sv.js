@@ -337,6 +337,8 @@ const d = {
   layout_semaforo_desc: "Hela skärmen byter färg",
   layout_classic: "Klassisk",
   layout_classic_desc: "Det vanliga utseendet",
+  layout_ring: "Ring",
+  layout_ring_desc: "Som en mobilapp, med en tidsring",
   language: "Språk",
   pmWarnPrefix: "MÅSTE SLUTA OM",
   pmWarnSuffix: "",
