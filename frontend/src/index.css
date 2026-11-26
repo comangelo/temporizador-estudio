@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variantes del modo claro: cambian el fondo de la página, las tarjetas blancas y los grises claros
+   (data-light-theme en <html>, solo con el modo claro). */
+:root {
+  --stone-50: 250 250 249;
+  --stone-100: 245 245 244;
+  --card-white: 255 255 255;
+  --brand-50: 255 247 237;
+  --brand-100: 255 237 213;
+  --brand-200: 254 215 170;
+  --brand-300: 253 186 116;
+  --brand-400: 251 146 60;
+  --brand-500: 249 115 22;
+  --brand-600: 234 88 12;
+  --brand-700: 194 65 12;
+  --slate-50: 248 250 252;
+  --slate-100: 241 245 249;
+  --slate-200: 226 232 240;
+  --slate-300: 203 213 225;
+}
+html[data-light-theme="cream"] {
+  --brand-50: 255 251 235;
+  --brand-100: 254 243 199;
+  --brand-200: 253 230 138;
+  --brand-300: 251 191 36;
+  --brand-400: 217 119 6;
+  --brand-500: 180 83 9;
+  --brand-600: 146 64 14;
+  --brand-700: 120 53 15;
+  --stone-50: 240 230 210;
+  --stone-100: 236 224 200;
+  --card-white: 253 248 236;
+  --slate-50: 250 245 235;
+  --slate-100: 243 235 220;
+  --slate-200: 232 221 200;
+  --slate-300: 214 199 170;
+}
+html[data-light-theme="sky"] {
+  --brand-50: 239 246 255;
+  --brand-100: 219 234 254;
+  --brand-200: 191 219 254;
+  --brand-300: 147 197 253;
+  --brand-400: 96 165 250;
+  --brand-500: 37 99 235;
+  --brand-600: 29 78 216;
+  --brand-700: 30 64 175;
+  --stone-50: 224 236 250;
+  --stone-100: 212 227 247;
+  --card-white: 246 250 255;
+  --slate-50: 242 247 253;
+  --slate-100: 230 238 249;
+  --slate-200: 212 224 242;
+  --slate-300: 184 203 230;
+}
+html[data-light-theme="mint"] {
+  --brand-50: 236 253 245;
+  --brand-100: 209 250 229;
+  --brand-200: 167 243 208;
+  --brand-300: 110 231 183;
+  --brand-400: 52 211 153;
+  --brand-500: 5 150 105;
+  --brand-600: 4 120 87;
+  --brand-700: 6 95 70;
+  --stone-50: 222 241 229;
+  --stone-100: 208 234 218;
+  --card-white: 246 252 248;
+  --slate-50: 241 248 244;
+  --slate-100: 227 241 232;
+  --slate-200: 207 229 215;
+  --slate-300: 176 210 188;
+}
+html[data-light-theme="lavender"] {
+  --brand-50: 245 243 255;
+  --brand-100: 237 233 254;
+  --brand-200: 221 214 254;
+  --brand-300: 196 181 253;
+  --brand-400: 167 139 250;
+  --brand-500: 124 58 237;
+  --brand-600: 109 40 217;
+  --brand-700: 91 33 182;
+  --stone-50: 234 228 248;
+  --stone-100: 223 215 245;
+  --card-white: 250 248 255;
+  --slate-50: 246 243 252;
+  --slate-100: 236 230 248;
+  --slate-200: 221 211 240;
+  --slate-300: 198 184 227;
+}
+html[data-light-theme="pearl"] {
+  --brand-50: 248 250 252;
+  --brand-100: 241 245 249;
+  --brand-200: 226 232 240;
+  --brand-300: 203 213 225;
+  --brand-400: 148 163 184;
+  --brand-500: 71 85 105;
+  --brand-600: 51 65 85;
+  --brand-700: 30 41 59;
+  --stone-50: 225 229 234;
+  --stone-100: 214 219 226;
+  --card-white: 243 245 248;
+  --slate-50: 240 242 245;
+  --slate-100: 229 232 236;
+  --slate-200: 212 217 223;
+  --slate-300: 188 195 204;
+}
+html[data-light-theme] .bg-white { background-color: rgb(var(--card-white) / var(--tw-bg-opacity, 1)); }
+
+/* Variantes del modo oscuro: la app usa la escala «zinc» para todo el modo oscuro;
+   cada variante la cambia por otra paleta (data-dark-theme en <html>, solo con el modo oscuro). */
+:root {
+  --zinc-50: 250 250 250;
+  --zinc-100: 244 244 245;
+  --zinc-200: 228 228 231;
+  --zinc-300: 212 212 216;
+  --zinc-400: 161 161 170;
+  --zinc-500: 113 113 122;
+  --zinc-600: 82 82 91;
+  --zinc-700: 63 63 70;
+  --zinc-800: 39 39 42;
+  --zinc-900: 24 24 27;
+  --zinc-950: 9 9 11;
+}
+html[data-dark-theme="amoled"] {
+  --zinc-50: 250 250 250;
+  --zinc-100: 244 244 245;
+  --zinc-200: 228 228 231;
+  --zinc-300: 212 212 216;
+  --zinc-400: 161 161 170;
+  --zinc-500: 113 113 122;
+  --zinc-600: 70 70 76;
+  --zinc-700: 40 40 44;
+  --zinc-800: 20 20 22;
+  --zinc-900: 0 0 0;
+  --zinc-950: 0 0 0;
+}
+html[data-dark-theme="slate"] {
+  --zinc-50: 244 247 252;
+  --zinc-100: 233 240 250;
+  --zinc-200: 214 225 242;
+  --zinc-300: 189 205 230;
+  --zinc-400: 140 160 194;
+  --zinc-500: 96 117 153;
+  --zinc-600: 64 84 120;
+  --zinc-700: 40 58 92;
+  --zinc-800: 24 38 68;
+  --zinc-900: 12 21 42;
+  --zinc-950: 5 10 24;
+}
+html[data-dark-theme="neutral"] {
+  --zinc-50: 250 248 245;
+  --zinc-100: 245 240 234;
+  --zinc-200: 231 223 213;
+  --zinc-300: 213 202 189;
+  --zinc-400: 168 156 142;
+  --zinc-500: 122 110 97;
+  --zinc-600: 90 79 68;
+  --zinc-700: 69 58 48;
+  --zinc-800: 45 37 30;
+  --zinc-900: 28 23 19;
+  --zinc-950: 15 12 10;
+}
+html[data-dark-theme="forest"] {
+  --zinc-50: 244 249 246;
+  --zinc-100: 234 243 238;
+  --zinc-200: 214 229 221;
+  --zinc-300: 190 210 199;
+  --zinc-400: 140 166 152;
+  --zinc-500: 98 125 111;
+  --zinc-600: 66 92 78;
+  --zinc-700: 45 66 55;
+  --zinc-800: 27 43 35;
+  --zinc-900: 14 26 20;
+  --zinc-950: 6 14 10;
+}
+html[data-dark-theme="plum"] {
+  --zinc-50: 249 246 251;
+  --zinc-100: 241 236 247;
+  --zinc-200: 227 219 237;
+  --zinc-300: 208 196 223;
+  --zinc-400: 166 150 186;
+  --zinc-500: 124 107 145;
+  --zinc-600: 92 74 112;
+  --zinc-700: 66 50 84;
+  --zinc-800: 42 30 56;
+  --zinc-900: 25 17 34;
+  --zinc-950: 13 8 19;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.font-heading {
+    font-family: 'Manrope', sans-serif;
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+code {
+    font-family: 'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+@layer base {
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 240 10% 3.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 240 10% 3.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 240 10% 3.9%;
+        --primary: 240 5.9% 10%;
+        --primary-foreground: 0 0% 98%;
+        --secondary: 240 4.8% 95.9%;
+        --secondary-foreground: 240 5.9% 10%;
+        --muted: 240 4.8% 95.9%;
+        --muted-foreground: 240 3.8% 46.1%;
+        --accent: 24.6 95% 53.1%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 240 5.9% 90%;
+        --input: 240 5.9% 90%;
+        --ring: 24.6 95% 53.1%;
+        --chart-1: 12 76% 61%;
+        --chart-2: 173 58% 39%;
+        --chart-3: 197 37% 24%;
+        --chart-4: 43 74% 66%;
+        --chart-5: 27 87% 67%;
+        --radius: 0.75rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+/* Timer animations */
+@keyframes pulse-subtle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.timer-active {
+    animation: pulse-subtle 1s ease-in-out infinite;
+}
+
+/* Scroll area */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f4f4f5;
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #d4d4d8;
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #a1a1aa;
+}
+
+/* Paragraph card hover effect */
+.paragraph-card {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.paragraph-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Upload zone animations */
+.upload-zone {
+    transition: border-color 0.2s ease-out, background-color 0.2s ease-out;
+}
+
+/* Tabular numbers for timers */
+.tabular-nums {
+    font-variant-numeric: tabular-nums;
+}
+
+@layer base {
+    [data-debug-wrapper="true"] {
+        display: contents !important;
+    }
+}
+
+/* Botón «Siguiente» cuando ya no queda de dónde recuperar tiempo: late despacio */
+@keyframes nextUrgentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(254, 202, 202, 0.95); filter: brightness(1); }
+  50% { box-shadow: 0 0 0 10px rgba(254, 202, 202, 0); filter: brightness(1.18); }
+}
+.next-urgent { animation: nextUrgentPulse 1.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .next-urgent { animation: none; box-shadow: 0 0 0 4px #fecaca; }
+}
