@@ -289,6 +289,15 @@ const d = {
   update: "업데이트",
   errNoText: "PDF에서 글자를 추출할 수 없습니다. 스캔한 PDF(이미지)인가요?",
   errFormat: "이 PDF에서 연구 기사 형식을 인식하지 못했습니다.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "연구",
+  tabHistory: "기록",
+  tabHelp: "도움말",
+  supportPage: "지원",
+  manualPdf: "PDF 설명서",
+  aboutApp: "앱 정보",
+  moreOptions: "더 보기",
+  newStudyLong: "새 연구",
 };
 
 export default d;

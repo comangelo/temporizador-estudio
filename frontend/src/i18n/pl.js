@@ -415,6 +415,15 @@ const d = {
   update: "Aktualizuj",
   errNoText: "Nie udało się odczytać tekstu z PDF. Czy to zeskanowany PDF (obraz)?",
   errFormat: "Nie rozpoznano układu artykułu do studium w tym PDF.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studium",
+  tabHistory: "Historia",
+  tabHelp: "Pomoc",
+  supportPage: "Wsparcie",
+  manualPdf: "Instrukcja w PDF",
+  aboutApp: "O aplikacji",
+  moreOptions: "Więcej opcji",
+  newStudyLong: "Nowe studium",
 };
 
 export default d;

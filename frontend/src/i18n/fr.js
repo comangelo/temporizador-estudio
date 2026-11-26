@@ -393,6 +393,15 @@ const d = {
   update: "Mettre à jour",
   errNoText: "Impossible d’extraire le texte du PDF. Est-ce un PDF numérisé (image) ?",
   errFormat: "Le format de l’article d’étude n’a pas été reconnu dans ce PDF.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Étude",
+  tabHistory: "Historique",
+  tabHelp: "Aide",
+  supportPage: "Assistance",
+  manualPdf: "Manuel en PDF",
+  aboutApp: "À propos",
+  moreOptions: "Plus d’options",
+  newStudyLong: "Nouvelle étude",
 };
 
 export default d;

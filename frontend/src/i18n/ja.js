@@ -289,6 +289,15 @@ const d = {
   update: "更新",
   errNoText: "PDF から文字を取り出せませんでした。スキャンした PDF（画像）ですか？",
   errFormat: "この PDF では研究記事の形式を認識できませんでした。",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "研究",
+  tabHistory: "履歴",
+  tabHelp: "ヘルプ",
+  supportPage: "サポート",
+  manualPdf: "PDFマニュアル",
+  aboutApp: "このアプリについて",
+  moreOptions: "その他",
+  newStudyLong: "新しい研究",
 };
 
 export default d;

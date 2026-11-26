@@ -393,6 +393,15 @@ const d = {
   update: "Uppdatera",
   errNoText: "Det gick inte att hämta text från PDF:en. Är det en skannad PDF (bild)?",
   errFormat: "Studieartikelns format kändes inte igen i den här PDF:en.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studium",
+  tabHistory: "Historik",
+  tabHelp: "Hjälp",
+  supportPage: "Support",
+  manualPdf: "Bruksanvisning som pdf",
+  aboutApp: "Om appen",
+  moreOptions: "Fler alternativ",
+  newStudyLong: "Nytt studium",
 };
 
 export default d;

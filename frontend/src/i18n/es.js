@@ -398,6 +398,15 @@ const es = {
   ptVariantLabel: "Versión del portugués",
   ptPortugal: "Portugal",
   ptBrazil: "Brasil",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Estudio",
+  tabHistory: "Historial",
+  tabHelp: "Ayuda",
+  supportPage: "Soporte",
+  manualPdf: "Manual en PDF",
+  aboutApp: "Acerca de",
+  moreOptions: "Más opciones",
+  newStudyLong: "Nuevo estudio",
 };
 
 export default es;

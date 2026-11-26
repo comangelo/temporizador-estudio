@@ -398,6 +398,15 @@ const gl = {
   ptVariantLabel: "Versión do portugués",
   ptPortugal: "Portugal",
   ptBrazil: "Brasil",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Estudo",
+  tabHistory: "Historial",
+  tabHelp: "Axuda",
+  supportPage: "Soporte",
+  manualPdf: "Manual en PDF",
+  aboutApp: "Acerca da app",
+  moreOptions: "Máis opcións",
+  newStudyLong: "Novo estudo",
 };
 
 export default gl;

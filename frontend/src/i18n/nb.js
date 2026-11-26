@@ -393,6 +393,15 @@ const d = {
   update: "Oppdater",
   errNoText: "Kunne ikke hente tekst fra PDF-en. Er det en skannet PDF (bilde)?",
   errFormat: "Formatet på studieartikkelen ble ikke gjenkjent i denne PDF-en.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studium",
+  tabHistory: "Historikk",
+  tabHelp: "Hjelp",
+  supportPage: "Brukerstøtte",
+  manualPdf: "Veiledning som PDF",
+  aboutApp: "Om appen",
+  moreOptions: "Flere valg",
+  newStudyLong: "Nytt studium",
 };
 
 export default d;

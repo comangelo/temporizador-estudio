@@ -393,6 +393,15 @@ const d = {
   update: "Bijwerken",
   errNoText: "Kon geen tekst uit de pdf halen. Is het een gescande pdf (afbeelding)?",
   errFormat: "De opmaak van het studieartikel werd in deze pdf niet herkend.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studie",
+  tabHistory: "Geschiedenis",
+  tabHelp: "Help",
+  supportPage: "Ondersteuning",
+  manualPdf: "Handleiding als pdf",
+  aboutApp: "Over de app",
+  moreOptions: "Meer opties",
+  newStudyLong: "Nieuwe studie",
 };
 
 export default d;

@@ -393,6 +393,15 @@ const d = {
   update: "Aggiorna",
   errNoText: "Impossibile estrarre il testo dal PDF. È un PDF scansionato (immagine)?",
   errFormat: "Il formato dell’articolo di studio non è stato riconosciuto in questo PDF.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studio",
+  tabHistory: "Cronologia",
+  tabHelp: "Aiuto",
+  supportPage: "Assistenza",
+  manualPdf: "Manuale in PDF",
+  aboutApp: "Informazioni",
+  moreOptions: "Altre opzioni",
+  newStudyLong: "Nuovo studio",
 };
 
 export default d;

@@ -404,6 +404,15 @@ const d = {
   update: "Actualizează",
   errNoText: "Nu s-a putut extrage textul din PDF. Este un PDF scanat (imagine)?",
   errFormat: "Formatul articolului de studiu nu a fost recunoscut în acest PDF.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studiu",
+  tabHistory: "Istoric",
+  tabHelp: "Ajutor",
+  supportPage: "Asistență",
+  manualPdf: "Manual în PDF",
+  aboutApp: "Despre aplicație",
+  moreOptions: "Mai multe opțiuni",
+  newStudyLong: "Studiu nou",
 };
 
 export default d;

@@ -393,6 +393,15 @@ const d = {
   update: "Update",
   errNoText: "Could not extract text from the PDF. Is it a scanned PDF (image)?",
   errFormat: "The study article format was not recognised in this PDF.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Study",
+  tabHistory: "History",
+  tabHelp: "Help",
+  supportPage: "Support",
+  manualPdf: "PDF manual",
+  aboutApp: "About",
+  moreOptions: "More options",
+  newStudyLong: "New study",
 };
 
 export default d;

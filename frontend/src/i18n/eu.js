@@ -398,6 +398,15 @@ const eu = {
   ptVariantLabel: "Portugesaren bertsioa",
   ptPortugal: "Portugal",
   ptBrazil: "Brasil",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Azterketa",
+  tabHistory: "Historia",
+  tabHelp: "Laguntza",
+  supportPage: "Laguntza teknikoa",
+  manualPdf: "Eskuliburua PDFan",
+  aboutApp: "Aplikazioari buruz",
+  moreOptions: "Aukera gehiago",
+  newStudyLong: "Azterketa berria",
 };
 
 export default eu;

@@ -393,6 +393,15 @@ const d = {
   update: "Aktualisieren",
   errNoText: "Aus dem PDF konnte kein Text gelesen werden. Ist es ein gescanntes PDF (Bild)?",
   errFormat: "Das Format des Studienartikels wurde in diesem PDF nicht erkannt.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studium",
+  tabHistory: "Verlauf",
+  tabHelp: "Hilfe",
+  supportPage: "Support",
+  manualPdf: "Handbuch als PDF",
+  aboutApp: "Über die App",
+  moreOptions: "Weitere Optionen",
+  newStudyLong: "Neues Studium",
 };
 
 export default d;
