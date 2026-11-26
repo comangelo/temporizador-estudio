@@ -16,7 +16,6 @@ import {
   Image,
   MessageCircleQuestion,
   AlertCircle,
-  MessagesSquare,
   Star,
   LayoutTemplate,
 } from "lucide-react";
@@ -54,8 +53,9 @@ const FINAL_STRETCH_SECONDS = 300; // últimos 5 minutos: sin prórroga
 export const LAYOUTS = [
   { id: "panel", name: "Panel ordenado", description: "Oscuro, con un recuadro de color grande" },
   { id: "semaforo", name: "Semáforo", description: "Toda la pantalla cambia de color" },
-  { id: "classic", name: "Clásico", description: "El diseño de siempre" },
+  { id: "bar", name: "Barra", description: "Cuenta atrás con una barra de tiempo" },
   { id: "ring", name: "Anillo", description: "Estilo de app del móvil, con un anillo de tiempo" },
+  { id: "fill", name: "Nivel", description: "La pantalla se llena de color con el tiempo" },
 ];
 export const DEFAULT_LAYOUT = "panel";
 
@@ -257,7 +257,9 @@ export default function PresentationMode({
 
   const canComment = phase === PHASES.PARAGRAPHS || phase === PHASES.REVIEW;
   const PhaseIcon = phaseInfo.icon;
-  const layout = LAYOUTS.some((l) => l.id === layoutProp) ? layoutProp : DEFAULT_LAYOUT;
+  // «Clásico» se sustituyó por «Barra» (noviembre 2026): quien lo tenía elegido pasa a «Barra»
+  const wanted = layoutProp === "classic" ? "bar" : layoutProp;
+  const layout = LAYOUTS.some((l) => l.id === wanted) ? wanted : DEFAULT_LAYOUT;
   const isSemaforo = layout === "semaforo";
   // "Pulsa Esc" solo tiene sentido con teclado (ordenador)
   const hasKeyboard = typeof window !== "undefined" && window.matchMedia?.("(pointer: fine)")?.matches;
@@ -511,8 +513,8 @@ export default function PresentationMode({
     </>
   );
 
-  /* ---------------- Diseño «Anillo» (aspecto de app de Android / iPhone) ---------------- */
-  if (layout === "ring") {
+  /* ---------- Diseños «Anillo», «Barra» y «Nivel» (aspecto de app de Android / iPhone) ---------- */
+  if (layout === "ring" || layout === "bar" || layout === "fill") {
     const state = colorClass.includes("green") ? "ok" : colorClass.includes("yellow") ? "grace"
       : colorClass.includes("red") ? "over" : colorClass.includes("emerald") ? "done" : "idle";
     // El anillo avanza en verde hasta el tiempo previsto; en la prórroga vuelve a llenarse en amarillo
@@ -524,7 +526,10 @@ export default function PresentationMode({
     const R = 120, C = 2 * Math.PI * R;
     const nextLabel = critical ? t("nextNow") : nextInfo?.kicker;
     return (
-      <div className="pm-ring fixed inset-0 z-[9999] flex flex-col" data-state={state} data-testid="presentation-mode" data-layout="ring">
+      <div className={`pm-ring pm-layout-${layout} fixed inset-0 z-[9999] flex flex-col`} data-state={state} data-testid="presentation-mode" data-layout={layout}>
+        {layout === "fill" && (
+          <div className="pm-fill-level" style={{ height: `${ratio * 100}%` }} aria-hidden="true" data-testid="presentation-fill-level" />
+        )}
         <div className="pm-ring-top">
           <button className="pm-ring-icon" onClick={onExit} aria-label={t("exit")} data-testid="presentation-exit"><X /></button>
           <div className="pm-ring-heading">
@@ -566,16 +571,61 @@ export default function PresentationMode({
               {state === "ok" || state === "done" ? <CheckCircle2 /> : state === "idle" ? <Play /> : <AlertCircle />}
               {indicatorText}
             </span>
-            <div className="pm-ring-dial">
-              <svg viewBox="0 0 280 280" aria-hidden="true">
-                <circle className="pm-ring-track" cx="140" cy="140" r={R} />
-                <circle className="pm-ring-progress" cx="140" cy="140" r={R} strokeDasharray={`${C * ratio} ${C}`} transform="rotate(-90 140 140)" />
-              </svg>
-              <div className="pm-ring-time">
-                <span className="pm-ring-clock" data-testid="presentation-phase-time">{formatTime(phaseElapsedTime)}</span>
+            {layout === "ring" && (
+              <div className="pm-ring-dial">
+                <svg viewBox="0 0 280 280" aria-hidden="true">
+                  <circle className="pm-ring-track" cx="140" cy="140" r={R} />
+                  <circle className="pm-ring-progress" cx="140" cy="140" r={R} strokeDasharray={`${C * ratio} ${C}`} transform="rotate(-90 140 140)" />
+                </svg>
+                <div className="pm-ring-time">
+                  <span className="pm-ring-clock" data-testid="presentation-phase-time">{formatTime(phaseElapsedTime)}</span>
+                  {estimatedTime > 0 && <span className="pm-ring-of">{t("ofTime", { time: formatTime(Math.round(estimatedTime)) })}</span>}
+                </div>
+              </div>
+            )}
+            {layout === "fill" && (
+              <div className="pm-fill-time">
+                <span className="pm-fill-clock" data-testid="presentation-phase-time">{formatTime(phaseElapsedTime)}</span>
                 {estimatedTime > 0 && <span className="pm-ring-of">{t("ofTime", { time: formatTime(Math.round(estimatedTime)) })}</span>}
               </div>
-            </div>
+            )}
+            {layout === "bar" && (() => {
+              // Cuenta atrás: en verde lo que queda; pasado el tiempo previsto, lo que llevas de más.
+              // La barra recorre todo el tramo: tiempo previsto + prórroga (zona rayada del final).
+              const est = estimatedTime > 0 ? estimatedTime : 0;
+              const graceOn = est > 0 && (state === "grace" || (state !== "over" && remainingTime > FINAL_STRETCH_SECONDS));
+              const total = est * (graceOn ? GRACE_RATIO : 1);
+              const fillRatio = !total ? (studyStarted ? 1 : 0) : state === "over" ? 1 : Math.min(1, phaseElapsedTime / total);
+              const mark = total ? est / total : 1;
+              const extra = Math.max(0, phaseElapsedTime - est);
+              const countdown = est > 0 && (state === "ok" || state === "grace" || state === "over");
+              const isOk = state === "ok";
+              return (
+                <div className="pm-bar">
+                  {countdown && <span className="pm-bar-label">{isOk ? t("barLeft") : t("barExtra")}</span>}
+                  <span className="pm-bar-clock" data-testid="presentation-phase-time">
+                    {!countdown ? formatTime(phaseElapsedTime) : isOk ? formatTime(Math.max(0, Math.ceil(est - phaseElapsedTime))) : `+${formatTime(Math.floor(extra))}`}
+                  </span>
+                  {est > 0 && (
+                    <span className="pm-ring-of">
+                      {state === "grace" ? t("ofTime", { time: `+${formatTime(Math.round(est * (GRACE_RATIO - 1)))}` }) : t("ofTime", { time: formatTime(Math.round(est)) })}
+                    </span>
+                  )}
+                  <div className="pm-bar-track" data-testid="presentation-time-bar">
+                    {graceOn && <div className="pm-bar-grace" style={{ left: `${mark * 100}%` }} />}
+                    <div className="pm-bar-fill" style={{ width: `${fillRatio * 100}%` }} />
+                    {graceOn && <div className="pm-bar-mark" style={{ left: `${mark * 100}%` }} />}
+                  </div>
+                  {est > 0 && (
+                    <div className="pm-bar-scale">
+                      <span>0:00</span>
+                      <span style={graceOn ? { position: "absolute", right: `${(1 - mark) * 100}%`, paddingRight: 6 } : undefined}>{formatTime(Math.round(est))}</span>
+                      {graceOn && <span>+{formatTime(Math.round(est * (GRACE_RATIO - 1)))}</span>}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
             {badgeRow}
             {reservedBlock}
             {warningBlock}
@@ -635,81 +685,28 @@ export default function PresentationMode({
     );
   }
 
-  /* ---------------- Diseño «Panel ordenado» ---------------- */
-  if (layout === "panel") {
-    return (
-      <div className="fixed inset-0 z-[9999] bg-zinc-800 text-white flex flex-col p-3 md:p-6 gap-2" data-testid="presentation-mode" data-layout="panel">
-        {topBar}
-        {isLandscape ? (
-          <div className="flex-1 min-h-0 flex flex-row gap-5">
-            <div className={`flex-1 min-h-0 overflow-y-auto rounded-[2rem] ${colorClass} transition-colors duration-500 flex flex-col items-center justify-center text-center px-4 py-3 shadow-2xl`} data-testid="presentation-status-box">
-              {statusCore(false)}
-            </div>
-            <div className="w-[42%] flex flex-col justify-center gap-4">
-              {timesRow(true)}{progressBar(true)}{actionBar("dark")}
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="space-y-2 shrink-0">{timesRow()}{progressBar(true)}</div>
-            <div className={`flex-1 min-h-0 overflow-y-auto rounded-[2rem] ${colorClass} transition-colors duration-500 flex flex-col items-center justify-center text-center px-4 py-5 shadow-2xl`} data-testid="presentation-status-box">
-              {statusCore(true)}
-            </div>
-            <div className="shrink-0 pt-1">{actionBar("dark")}</div>
-          </>
-        )}
-        {escHint}
-      </div>
-    );
-  }
-
-  /* ---------------- Diseño «Clásico» (el de siempre, con el botón de avanzar mejorado) ---------------- */
+  /* ---------------- Diseño «Panel ordenado» (también el de por defecto) ---------------- */
   return (
-    <div className="fixed inset-0 z-[9999] bg-zinc-800 text-white flex flex-col p-4 md:p-6 landscape:py-2 landscape:px-4" data-testid="presentation-mode" data-layout="classic">
+    <div className="fixed inset-0 z-[9999] bg-zinc-800 text-white flex flex-col p-3 md:p-6 gap-2" data-testid="presentation-mode" data-layout="panel">
       {topBar}
-
-      <div className="flex-1 flex flex-col items-center overflow-y-auto py-2 [&>*:first-child]:mt-auto [&>*:last-child]:mb-auto">
-        <div className="mb-4 landscape:mb-2 w-full landscape:sticky landscape:top-0 landscape:z-10 landscape:bg-zinc-800 landscape:py-1">{timesRow()}</div>
-
-        <div className="w-full mb-4">{progressBar(false)}</div>
-
-        {studyStarted && (
-          <div className="text-center bg-gradient-to-br from-zinc-700 to-zinc-800 border border-zinc-600 rounded-2xl px-5 py-3 landscape:p-2 mb-4 shadow-lg" data-testid="presentation-comments">
-            <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest">{t("participations")}</p>
-            <p className="text-4xl md:text-5xl landscape:text-3xl font-black text-orange-500 tabular-nums">{totalComments}</p>
-            {canComment && (
-              <p className="text-[11px] text-zinc-400 mt-0.5 flex items-center justify-center gap-1">
-                <MessagesSquare className="w-3 h-3" /> {phase === PHASES.REVIEW ? t("pmInThisReview", { n: phaseComments }) : t("pmInThisParagraph", { n: phaseComments })}
-              </p>
-            )}
+      {isLandscape ? (
+        <div className="flex-1 min-h-0 flex flex-row gap-5">
+          <div className={`flex-1 min-h-0 overflow-y-auto rounded-[2rem] ${colorClass} transition-colors duration-500 flex flex-col items-center justify-center text-center px-4 py-3 shadow-2xl`} data-testid="presentation-status-box">
+            {statusCore(false)}
           </div>
-        )}
-
-        <div className={`w-full max-w-[17rem] rounded-2xl flex flex-col items-center justify-center transition-colors duration-500 py-8 px-6 landscape:py-3 landscape:px-2 shadow-2xl ${colorClass}`} data-testid="presentation-status-box">
-          <p className="text-lg md:text-2xl landscape:text-base font-bold tracking-widest text-center">{indicatorText}</p>
-          <p className="text-4xl md:text-6xl landscape:text-4xl font-light tabular-nums">{formatTime(phaseElapsedTime)}</p>
-          {estimatedTime > 0 && (
-            <p className="opacity-70 text-lg md:text-2xl landscape:text-base font-light tabular-nums">/ {formatTime(Math.round(estimatedTime))}</p>
-          )}
-          {warningBlock}
+          <div className="w-[42%] flex flex-col justify-center gap-4">
+            {timesRow(true)}{progressBar(true)}{actionBar("dark")}
+          </div>
         </div>
-
-        <div className="text-center mt-4 landscape:mt-2">
-          <p className="text-2xl md:text-3xl landscape:text-xl font-black uppercase tracking-wider flex items-center justify-center gap-2" data-testid="presentation-phase-title">
-            <PhaseIcon className="w-6 h-6 text-zinc-400" />
-            {phaseInfo.title}
-          </p>
-          {phaseInfo.subtitle && <p className="text-lg md:text-xl landscape:text-base text-zinc-400 mt-1">{phaseInfo.subtitle}</p>}
-          {badgeRow}
-          {reservedBlock}
-        </div>
-
-        <div className="flex flex-col items-center gap-3 mt-6 landscape:mt-3 w-full max-w-sm">
-          {commentButton("dark")}
-          {nextButton("dark")}
-        </div>
-      </div>
-
+      ) : (
+        <>
+          <div className="space-y-2 shrink-0">{timesRow()}{progressBar(true)}</div>
+          <div className={`flex-1 min-h-0 overflow-y-auto rounded-[2rem] ${colorClass} transition-colors duration-500 flex flex-col items-center justify-center text-center px-4 py-5 shadow-2xl`} data-testid="presentation-status-box">
+            {statusCore(true)}
+          </div>
+          <div className="shrink-0 pt-1">{actionBar("dark")}</div>
+        </>
+      )}
       {escHint}
     </div>
   );
