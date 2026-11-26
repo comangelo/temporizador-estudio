@@ -1,0 +1,6 @@
+# Archivos que no hacen falta para publicar la web en Vercel
+*.md
+LICENSE
+NOTICE
+netlify.toml
+frontend/node_modules/

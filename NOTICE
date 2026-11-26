@@ -1,0 +1,38 @@
+Temporizador de Estudio (Temporizador Estudio Atalaya)
+Copyright 2026 safeSingleMark S.L.
+
+This product includes software developed by safeSingleMark S.L.
+https://temporizador-estudio.vercel.app
+
+Trademarks / Marcas
+-------------------
+The Apache License 2.0 does not grant permission to use the names
+"Temporizador de Estudio" or "Temporizador Estudio Atalaya", nor the
+app's logo and icons (see section 6 of the License). Forks and
+derived apps must use their own name and icon.
+
+La licencia Apache 2.0 no da permiso para usar los nombres
+«Temporizador de Estudio» ni «Temporizador Estudio Atalaya», ni el
+logo ni los iconos de la app (apartado 6 de la licencia). Las copias
+y apps derivadas deben usar su propio nombre e icono.
+
+Third-party content / Contenido de terceros
+-------------------------------------------
+This is an unofficial app, not affiliated with jw.org or Watch Tower.
+Publications from jw.org are the property of their owners and are NOT
+covered by this License. This repository does not include them: the
+app reads the PDF that each user downloads on their own device. The
+screenshots in the manuals use an invented sample article.
+
+Aplicación no oficial, sin relación con jw.org ni con Watch Tower.
+Las publicaciones de jw.org pertenecen a sus propietarios y NO están
+cubiertas por esta licencia. Este repositorio no las incluye: la app
+lee el PDF que cada usuario descarga en su propio dispositivo. Las
+capturas de los manuales usan un artículo de ejemplo inventado.
+
+Third-party software / Software de terceros
+-------------------------------------------
+The components in frontend/src/components/ui are based on shadcn/ui
+(https://ui.shadcn.com), Copyright (c) 2023 shadcn, MIT License.
+Other dependencies (React, pdf.js, Radix UI, Lucide, Tailwind CSS…)
+are installed from npm and keep their own licenses.
