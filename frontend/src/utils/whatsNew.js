@@ -8,6 +8,25 @@
  */
 export const RELEASES = [
   {
+    id: "2026-11-27",
+    items: {
+      es: ["En el móvil y la tableta, la app tiene ahora aspecto de app de Android o de iPhone: barra de pestañas abajo con Estudio, Historial, Ayuda y Ajustes. El botón «atrás» del móvil vuelve a la pantalla anterior.", "En el ordenador sigue igual."],
+      ca: ["Al mòbil i a la tauleta, l’app té ara aspecte d’app d’Android o d’iPhone: barra de pestanyes a baix amb Estudi, Historial, Ajuda i Configuració. El botó «enrere» del mòbil torna a la pantalla anterior.", "A l’ordinador continua igual."],
+      eu: ["Mugikorrean eta tabletan, aplikazioak Android edo iPhone aplikazio baten itxura du orain: fitxa-barra behean, Azterketa, Historia, Laguntza eta Ezarpenekin. Mugikorreko «atzera» botoiak aurreko pantailara itzultzen da.", "Ordenagailuan berdin jarraitzen du."],
+      gl: ["No móbil e na tableta, a app ten agora aspecto de app de Android ou de iPhone: barra de lapelas abaixo con Estudo, Historial, Axuda e Axustes. O botón «atrás» do móbil volve á pantalla anterior.", "No ordenador segue igual."],
+      en: ["On phones and tablets the app now looks like an Android or iPhone app: a tab bar at the bottom with Study, History, Help and Settings. The phone’s back button returns to the previous screen.", "On the computer it stays the same."],
+      de: ["Auf Handy und Tablet sieht die App jetzt wie eine Android- bzw. iPhone-App aus: unten eine Leiste mit Studium, Verlauf, Hilfe und Einstellungen. Die Zurück-Taste des Handys führt zum vorherigen Bildschirm.", "Am Computer bleibt alles wie bisher."],
+      it: ["Su telefono e tablet l’app ha ora l’aspetto di un’app Android o iPhone: barra delle schede in basso con Studio, Cronologia, Aiuto e Impostazioni. Il tasto «indietro» del telefono torna alla schermata precedente.", "Sul computer resta tutto uguale."],
+      fr: ["Sur téléphone et tablette, l’app ressemble maintenant à une app Android ou iPhone : barre d’onglets en bas avec Étude, Historique, Aide et Réglages. Le bouton « retour » du téléphone ramène à l’écran précédent.", "Sur ordinateur, rien ne change."],
+      pt: ["No celular e no tablet, o app agora tem aparência de app de Android ou de iPhone: barra de abas embaixo com Estudo, Histórico, Ajuda e Configurações. O botão «voltar» do celular volta à tela anterior.", "No computador continua igual."],
+      pl: ["Na telefonie i tablecie aplikacja wygląda teraz jak aplikacja na Androida lub iPhone’a: na dole pasek kart Studium, Historia, Pomoc i Ustawienia. Przycisk «wstecz» w telefonie wraca do poprzedniego ekranu.", "Na komputerze bez zmian."],
+      nl: ["Op telefoon en tablet ziet de app er nu uit als een Android- of iPhone-app: onderaan een tabbalk met Studie, Geschiedenis, Help en Instellingen. De terugknop van de telefoon gaat naar het vorige scherm.", "Op de computer blijft alles hetzelfde."],
+      ro: ["Pe telefon și tabletă, aplicația arată acum ca o aplicație Android sau iPhone: bară de file jos cu Studiu, Istoric, Ajutor și Setări. Butonul «înapoi» al telefonului revine la ecranul anterior.", "Pe calculator rămâne la fel."],
+      nb: ["På mobil og nettbrett ser appen nå ut som en Android- eller iPhone-app: en fanelinje nederst med Studium, Historikk, Hjelp og Innstillinger. Tilbake-knappen på mobilen går til forrige skjerm.", "På datamaskinen er alt som før."],
+      sv: ["På mobil och surfplatta ser appen nu ut som en Android- eller iPhone-app: en flikrad längst ner med Studium, Historik, Hjälp och Inställningar. Mobilens bakåtknapp går till föregående skärm.", "På datorn är allt som förut."],
+    },
+  },
+  {
     id: "2026-11-26-2",
     items: {
       es: ["Nuevos idiomas: noruego y sueco, con su manual y su guía rápida. La revista se descarga de jw.org en esos idiomas."],

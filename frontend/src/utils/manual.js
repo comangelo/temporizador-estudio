@@ -19,3 +19,9 @@ export function guideUrl() {
   const l = currentLanguage();
   return MANUAL_LANGS.includes(l) ? `/guia-rapida-${l}.html` : "/guia-rapida.html";
 }
+
+/** Manual en PDF en el idioma actual de la app. */
+export function manualPdfUrl() {
+  const l = currentLanguage();
+  return MANUAL_LANGS.includes(l) ? `/manual_usuario_${l}.pdf` : "/manual_usuario.pdf";
+}
