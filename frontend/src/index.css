@@ -516,7 +516,9 @@ html[data-ui="ios"] .pm-ring-clock { font-weight: 200; }
 .pm-ring-body.is-landscape .pm-ring-actions { width: 42%; }
 .pm-ring-comment, .pm-ring-next { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; transition: transform .1s; }
 .pm-ring-comment:active, .pm-ring-next:active { transform: scale(.97); }
-.pm-ring-comment { min-height: 76px; padding: 0 20px; border-radius: 24px; background: var(--ring-tonal); color: var(--ring-fg); }
+.pm-ring-comment { min-height: 76px; padding: 0 20px; border-radius: 24px; background: rgb(var(--brand-600)); color: #fff; box-shadow: 0 4px 14px rgb(var(--brand-600) / .35); }
+.pm-ring-comment .pm-ring-btn-label { font-weight: 600; }
+.pm-ring-comment .pm-ring-count small { color: rgba(255,255,255,.85); }
 .pm-ring-next { min-height: 92px; padding: 0 24px; border-radius: 28px; background: var(--ring-next); color: var(--ring-next-fg); }
 .pm-ring-btn-icon { width: 30px; height: 30px; flex: none; }
 .pm-ring-btn-label { flex: 1; font-size: 19px; font-weight: 500; }
@@ -531,7 +533,7 @@ html[data-ui="ios"] .pm-ring-clock { font-weight: 200; }
 html[data-ui="ios"] .pm-ring-actions { flex-direction: row; }
 html[data-ui="ios"] .pm-ring-body.is-landscape .pm-ring-actions { flex-direction: column; }
 html[data-ui="ios"] .pm-ring-comment, html[data-ui="ios"] .pm-ring-next { flex: 1; min-height: 104px; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: 14px 16px; border-radius: 24px; }
-html[data-ui="ios"] .pm-ring-comment .pm-ring-btn-icon { color: #ff9f0a; }
+html[data-ui="ios"] .pm-ring-comment .pm-ring-btn-icon { color: #fff; }
 html[data-ui="ios"] .pm-ring-btn-label { font-size: 15px; flex: none; }
 html[data-ui="ios"] .pm-ring-count { position: absolute; }
 html[data-ui="ios"] .pm-ring-comment { position: relative; }
