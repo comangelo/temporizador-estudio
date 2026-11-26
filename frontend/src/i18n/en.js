@@ -337,6 +337,8 @@ const d = {
   layout_semaforo_desc: "The whole screen changes colour",
   layout_classic: "Classic",
   layout_classic_desc: "The usual layout",
+  layout_ring: "Ring",
+  layout_ring_desc: "Phone app style, with a time ring",
   language: "Language",
   pmWarnPrefix: "MUST END IN",
   pmWarnSuffix: "",
@@ -393,6 +395,15 @@ const d = {
   update: "Update",
   errNoText: "Could not extract text from the PDF. Is it a scanned PDF (image)?",
   errFormat: "The study article format was not recognised in this PDF.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Study",
+  tabHistory: "History",
+  tabHelp: "Help",
+  supportPage: "Support",
+  manualPdf: "PDF manual",
+  aboutApp: "About",
+  moreOptions: "More options",
+  newStudyLong: "New study",
 };
 
 export default d;

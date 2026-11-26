@@ -348,6 +348,8 @@ const d = {
   layout_semaforo_desc: "Tot ecranul își schimbă culoarea",
   layout_classic: "Clasic",
   layout_classic_desc: "Aspectul obișnuit",
+  layout_ring: "Inel",
+  layout_ring_desc: "Stil de aplicație de telefon, cu un inel de timp",
   language: "Limbă",
   pmWarnPrefix: "ÎN",
   pmWarnSuffix: "TREBUIE SĂ ÎNCHEI",
@@ -404,6 +406,15 @@ const d = {
   update: "Actualizează",
   errNoText: "Nu s-a putut extrage textul din PDF. Este un PDF scanat (imagine)?",
   errFormat: "Formatul articolului de studiu nu a fost recunoscut în acest PDF.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studiu",
+  tabHistory: "Istoric",
+  tabHelp: "Ajutor",
+  supportPage: "Asistență",
+  manualPdf: "Manual în PDF",
+  aboutApp: "Despre aplicație",
+  moreOptions: "Mai multe opțiuni",
+  newStudyLong: "Studiu nou",
 };
 
 export default d;

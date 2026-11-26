@@ -55,6 +55,7 @@ export const LAYOUTS = [
   { id: "panel", name: "Panel ordenado", description: "Oscuro, con un recuadro de color grande" },
   { id: "semaforo", name: "Semáforo", description: "Toda la pantalla cambia de color" },
   { id: "classic", name: "Clásico", description: "El diseño de siempre" },
+  { id: "ring", name: "Anillo", description: "Estilo de app del móvil, con un anillo de tiempo" },
 ];
 export const DEFAULT_LAYOUT = "panel";
 
@@ -509,6 +510,97 @@ export default function PresentationMode({
       {warningBlock}
     </>
   );
+
+  /* ---------------- Diseño «Anillo» (aspecto de app de Android / iPhone) ---------------- */
+  if (layout === "ring") {
+    const state = colorClass.includes("green") ? "ok" : colorClass.includes("yellow") ? "grace"
+      : colorClass.includes("red") ? "over" : colorClass.includes("emerald") ? "done" : "idle";
+    const ratio = estimatedTime > 0 ? Math.min(1, phaseElapsedTime / estimatedTime) : (studyStarted ? 1 : 0);
+    const R = 120, C = 2 * Math.PI * R;
+    const nextLabel = critical ? t("nextNow") : nextInfo?.kicker;
+    return (
+      <div className="pm-ring fixed inset-0 z-[9999] flex flex-col" data-state={state} data-testid="presentation-mode" data-layout="ring">
+        <div className="pm-ring-top">
+          <button className="pm-ring-icon" onClick={onExit} aria-label={t("exit")} data-testid="presentation-exit"><X /></button>
+          <div className="pm-ring-heading">
+            <span className="pm-ring-title" data-testid="presentation-phase-title">{phaseInfo.title}</span>
+            <span className="pm-ring-sub">
+              {studyStarted && phase !== PHASES.FINISHED
+                ? `${t("ends")} ${formatClockTime(shownEndTime)} · ${t("remaining").toLowerCase()} ${formatTime(Math.max(0, remainingTime))}`
+                : phaseInfo.subtitle}
+            </span>
+          </div>
+          <div className="flex items-center">
+            <button className="pm-ring-icon" onClick={() => setShowLayoutMenu((v) => !v)} aria-label={t("changeLayout")} data-testid="presentation-layout-button"><LayoutTemplate /></button>
+            {studyStarted && phase !== PHASES.FINISHED && (
+              <button className="pm-ring-icon" onClick={onToggleTimer} aria-label={isTimerRunning ? t("pause") : t("resume")} data-testid="presentation-toggle-timer">
+                {isTimerRunning ? <Pause /> : <Play />}
+              </button>
+            )}
+          </div>
+          {showLayoutMenu && (
+            <div className="absolute right-3 top-16 z-30 bg-zinc-900 border border-zinc-700 rounded-2xl p-2 shadow-2xl w-60" data-testid="presentation-layout-menu">
+              <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider px-2 pt-1 pb-2">{t("layout")}</p>
+              {LAYOUTS.map((l) => (
+                <button key={l.id} onClick={() => { onLayoutChange?.(l.id); setShowLayoutMenu(false); }}
+                  className={`w-full text-left px-3 py-2.5 rounded-xl mb-1 ${layout === l.id ? "bg-orange-500 text-white" : "text-zinc-200 hover:bg-zinc-800"}`}
+                  data-testid={`presentation-layout-${l.id}`}>
+                  <span className="block text-sm font-bold">{t(`layout_${l.id}`)}</span>
+                  <span className={`block text-xs ${layout === l.id ? "text-orange-100" : "text-zinc-400"}`}>{t(`layout_${l.id}_desc`)}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        {studyStarted && studyBar ? (
+          <div className="pm-ring-bar"><StudyBar bar={studyBar} variant="ring" size="md" testid="presentation-study-bar" /></div>
+        ) : null}
+        <div className={`pm-ring-body ${isLandscape ? "is-landscape" : ""}`}>
+          <div className="pm-ring-center">
+            <span className="pm-ring-chip" data-testid="presentation-status">
+              {state === "ok" || state === "done" ? <CheckCircle2 /> : state === "idle" ? <Play /> : <AlertCircle />}
+              {indicatorText}
+            </span>
+            <div className="pm-ring-dial">
+              <svg viewBox="0 0 280 280" aria-hidden="true">
+                <circle className="pm-ring-track" cx="140" cy="140" r={R} />
+                <circle className="pm-ring-progress" cx="140" cy="140" r={R} strokeDasharray={`${C * ratio} ${C}`} transform="rotate(-90 140 140)" />
+              </svg>
+              <div className="pm-ring-time">
+                <span className="pm-ring-clock" data-testid="presentation-phase-time">{formatTime(phaseElapsedTime)}</span>
+                {estimatedTime > 0 && <span className="pm-ring-of">{t("ofTime", { time: formatTime(Math.round(estimatedTime)) })}</span>}
+              </div>
+            </div>
+            {badgeRow}
+            {reservedBlock}
+            {warningBlock}
+          </div>
+          <div className="pm-ring-actions">
+            {canComment && (
+              <button className="pm-ring-comment" onClick={onAddComment} aria-label={t("markComment")} data-testid="presentation-add-comment">
+                <Hand className="pm-ring-btn-icon" />
+                <span className="pm-ring-btn-label">{t("comment")}</span>
+                <span className="pm-ring-count">
+                  <b data-testid="presentation-phase-comment-count">{phaseComments}</b>
+                  <small data-testid="presentation-comment-count">{t("inTotal")} {totalComments}</small>
+                </span>
+              </button>
+            )}
+            {nextInfo && (
+              <button className={`pm-ring-next ${urgent ? "is-urgent" : ""} ${critical ? "next-urgent" : ""}`} onClick={handleSmartButton}
+                data-testid="presentation-smart-button" data-urgency={urgent ? urgency : "none"}>
+                <span className="pm-ring-next-text">
+                  {nextLabel && <small data-testid="presentation-next-kicker">{nextLabel}</small>}
+                  <b data-testid="presentation-next-label">{nextInfo.main}</b>
+                </span>
+                <ArrowRight className="pm-ring-btn-icon" strokeWidth={2.4} />
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   /* ---------------- Diseño «Semáforo» ---------------- */
   if (layout === "semaforo") {

@@ -337,6 +337,8 @@ const gl = {
   layout_semaforo_desc: "Toda a pantalla cambia de cor",
   layout_classic: "Clásico",
   layout_classic_desc: "O deseño de sempre",
+  layout_ring: "Anel",
+  layout_ring_desc: "Estilo de app do móbil, cun anel de tempo",
   language: "Idioma",
   pmWarnPrefix: "EN",
   pmWarnSuffix: "DEBE CONCLUÍR",
@@ -398,6 +400,15 @@ const gl = {
   ptVariantLabel: "Versión do portugués",
   ptPortugal: "Portugal",
   ptBrazil: "Brasil",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Estudo",
+  tabHistory: "Historial",
+  tabHelp: "Axuda",
+  supportPage: "Soporte",
+  manualPdf: "Manual en PDF",
+  aboutApp: "Acerca da app",
+  moreOptions: "Máis opcións",
+  newStudyLong: "Novo estudo",
 };
 
 export default gl;

@@ -233,6 +233,8 @@ const d = {
   layout_semaforo_desc: "画面全体の色が変わる",
   layout_classic: "クラシック",
   layout_classic_desc: "いつもの表示",
+  layout_ring: "リング",
+  layout_ring_desc: "スマホアプリ風、時間のリング付き",
   language: "言語",
   pmWarnPrefix: "あと",
   pmWarnSuffix: "で終了",
@@ -289,6 +291,15 @@ const d = {
   update: "更新",
   errNoText: "PDF から文字を取り出せませんでした。スキャンした PDF（画像）ですか？",
   errFormat: "この PDF では研究記事の形式を認識できませんでした。",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "研究",
+  tabHistory: "履歴",
+  tabHelp: "ヘルプ",
+  supportPage: "サポート",
+  manualPdf: "PDFマニュアル",
+  aboutApp: "このアプリについて",
+  moreOptions: "その他",
+  newStudyLong: "新しい研究",
 };
 
 export default d;

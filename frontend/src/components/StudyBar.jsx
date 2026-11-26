@@ -8,14 +8,16 @@ import { t } from "@/i18n";
  *  - texto: «A tiempo» · «2 min tarde · −15 s por pregunta» · «1 min adelantado»
  * variant: "dark" (fondo gris oscuro neutro: el retraso se escribe en ámbar)
  *          "color" (fondo verde/amarillo/rojo del semáforo: todo en blanco)
+ *          "ring" (diseño «Anillo»: toma los colores del estado, variables --ring-*)
  */
 export default function StudyBar({ bar, variant = "dark", size = "md", className = "", testid = "study-bar" }) {
   if (!bar) return null;
   const onColor = variant === "color";
-  const done = onColor ? "rgba(255,255,255,0.92)" : "rgba(244,244,245,0.92)";
-  const todo = onColor ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.14)";
-  const lineColor = onColor ? "#111" : "#fff";
-  const ring = onColor ? "rgba(255,255,255,0.95)" : "rgba(24,24,27,0.95)";
+  const onRing = variant === "ring";
+  const done = onRing ? "var(--ring)" : onColor ? "rgba(255,255,255,0.92)" : "rgba(244,244,245,0.92)";
+  const todo = onRing ? "var(--ring-track)" : onColor ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.14)";
+  const lineColor = onRing ? "var(--ring-fg)" : onColor ? "#111" : "#fff";
+  const ring = onRing ? "var(--ring-bg)" : onColor ? "rgba(255,255,255,0.95)" : "rgba(24,24,27,0.95)";
 
   let acc = 0;
   const big = size === "lg";
@@ -23,7 +25,7 @@ export default function StudyBar({ bar, variant = "dark", size = "md", className
     ? t("barLate", { n: bar.minutes })
     : bar.status === "early" ? t("barEarly", { n: bar.minutes }) : t("barOnTime");
   const showPerQ = bar.status === "late" && bar.perQuestionDelta <= -1;
-  const statusColor = bar.status === "late" && !onColor ? "text-amber-400" : onColor ? "text-white" : "text-zinc-100";
+  const statusColor = onRing ? "" : bar.status === "late" && !onColor ? "text-amber-400" : onColor ? "text-white" : "text-zinc-100";
 
   return (
     <div className={`w-full ${className}`} data-testid={testid} data-status={bar.status}>
@@ -49,9 +51,9 @@ export default function StudyBar({ bar, variant = "dark", size = "md", className
         />
       </div>
       <p className={`mt-2.5 text-center tabular-nums leading-tight ${big ? "text-xl md:text-2xl" : "text-base"}`} data-testid={`${testid}-text`}>
-        <b className={`font-bold ${statusColor}`}>{text}</b>
+        <b className={`font-bold ${statusColor}`} style={onRing ? { color: bar.status === "late" ? "var(--ring)" : "var(--ring-fg)" } : undefined}>{text}</b>
         {showPerQ && (
-          <span className={`ml-2 font-medium ${big ? "text-base md:text-lg" : "text-sm"} ${onColor ? "text-white/85" : "text-zinc-300"}`}>
+          <span className={`ml-2 font-medium ${big ? "text-base md:text-lg" : "text-sm"} ${onRing ? "opacity-75" : onColor ? "text-white/85" : "text-zinc-300"}`}>
             {t("barPerQuestion", { s: Math.abs(bar.perQuestionDelta) })}
           </span>
         )}

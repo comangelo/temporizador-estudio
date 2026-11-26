@@ -233,6 +233,8 @@ const d = {
   layout_semaforo_desc: "화면 전체의 색이 바뀜",
   layout_classic: "클래식",
   layout_classic_desc: "기존 디자인",
+  layout_ring: "링",
+  layout_ring_desc: "휴대폰 앱 스타일, 시간 링 포함",
   language: "언어",
   pmWarnPrefix: "",
   pmWarnSuffix: "후 마쳐야 함",
@@ -289,6 +291,15 @@ const d = {
   update: "업데이트",
   errNoText: "PDF에서 글자를 추출할 수 없습니다. 스캔한 PDF(이미지)인가요?",
   errFormat: "이 PDF에서 연구 기사 형식을 인식하지 못했습니다.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "연구",
+  tabHistory: "기록",
+  tabHelp: "도움말",
+  supportPage: "지원",
+  manualPdf: "PDF 설명서",
+  aboutApp: "앱 정보",
+  moreOptions: "더 보기",
+  newStudyLong: "새 연구",
 };
 
 export default d;

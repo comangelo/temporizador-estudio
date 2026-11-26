@@ -359,6 +359,8 @@ const d = {
   layout_semaforo_desc: "Cały ekran zmienia kolor",
   layout_classic: "Klasyczny",
   layout_classic_desc: "Dotychczasowy układ",
+  layout_ring: "Pierścień",
+  layout_ring_desc: "Wygląd aplikacji na telefon, z pierścieniem czasu",
   language: "Język",
   pmWarnPrefix: "ZA",
   pmWarnSuffix: "ZAKOŃCZ",
@@ -415,6 +417,15 @@ const d = {
   update: "Aktualizuj",
   errNoText: "Nie udało się odczytać tekstu z PDF. Czy to zeskanowany PDF (obraz)?",
   errFormat: "Nie rozpoznano układu artykułu do studium w tym PDF.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studium",
+  tabHistory: "Historia",
+  tabHelp: "Pomoc",
+  supportPage: "Wsparcie",
+  manualPdf: "Instrukcja w PDF",
+  aboutApp: "O aplikacji",
+  moreOptions: "Więcej opcji",
+  newStudyLong: "Nowe studium",
 };
 
 export default d;

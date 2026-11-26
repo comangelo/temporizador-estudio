@@ -51,7 +51,7 @@ function segLabel(sg) {
 const diffClass = (d) => (d > 30 ? "text-red-600" : d < -30 ? "text-emerald-600" : "text-slate-600");
 const rowClass = (d) => (d > 30 ? "bg-red-50" : d < -30 ? "bg-emerald-50" : "");
 
-function Report({ report }) {
+export function Report({ report }) {
   const segs = report.segments || [];
   const realDuration = Math.round((report.endedAt - report.startedAt) / 1000);
   const planned = report.plannedSeconds || 0;

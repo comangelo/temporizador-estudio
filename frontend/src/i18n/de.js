@@ -337,6 +337,8 @@ const d = {
   layout_semaforo_desc: "Der ganze Bildschirm wechselt die Farbe",
   layout_classic: "Klassisch",
   layout_classic_desc: "Das bisherige Layout",
+  layout_ring: "Ring",
+  layout_ring_desc: "Wie eine Handy-App, mit einem Zeitring",
   language: "Sprache",
   pmWarnPrefix: "ENDE IN",
   pmWarnSuffix: "",
@@ -393,6 +395,15 @@ const d = {
   update: "Aktualisieren",
   errNoText: "Aus dem PDF konnte kein Text gelesen werden. Ist es ein gescanntes PDF (Bild)?",
   errFormat: "Das Format des Studienartikels wurde in diesem PDF nicht erkannt.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studium",
+  tabHistory: "Verlauf",
+  tabHelp: "Hilfe",
+  supportPage: "Support",
+  manualPdf: "Handbuch als PDF",
+  aboutApp: "Über die App",
+  moreOptions: "Weitere Optionen",
+  newStudyLong: "Neues Studium",
 };
 
 export default d;

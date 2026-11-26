@@ -337,6 +337,8 @@ const d = {
   layout_semaforo_desc: "Hela skärmen byter färg",
   layout_classic: "Klassisk",
   layout_classic_desc: "Det vanliga utseendet",
+  layout_ring: "Ring",
+  layout_ring_desc: "Som en mobilapp, med en tidsring",
   language: "Språk",
   pmWarnPrefix: "MÅSTE SLUTA OM",
   pmWarnSuffix: "",
@@ -393,6 +395,15 @@ const d = {
   update: "Uppdatera",
   errNoText: "Det gick inte att hämta text från PDF:en. Är det en skannad PDF (bild)?",
   errFormat: "Studieartikelns format kändes inte igen i den här PDF:en.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studium",
+  tabHistory: "Historik",
+  tabHelp: "Hjälp",
+  supportPage: "Support",
+  manualPdf: "Bruksanvisning som pdf",
+  aboutApp: "Om appen",
+  moreOptions: "Fler alternativ",
+  newStudyLong: "Nytt studium",
 };
 
 export default d;

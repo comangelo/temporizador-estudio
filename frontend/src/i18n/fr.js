@@ -337,6 +337,8 @@ const d = {
   layout_semaforo_desc: "Tout l’écran change de couleur",
   layout_classic: "Classique",
   layout_classic_desc: "La disposition habituelle",
+  layout_ring: "Anneau",
+  layout_ring_desc: "Style d’app mobile, avec un anneau de temps",
   language: "Langue",
   pmWarnPrefix: "FIN DANS",
   pmWarnSuffix: "",
@@ -393,6 +395,15 @@ const d = {
   update: "Mettre à jour",
   errNoText: "Impossible d’extraire le texte du PDF. Est-ce un PDF numérisé (image) ?",
   errFormat: "Le format de l’article d’étude n’a pas été reconnu dans ce PDF.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Étude",
+  tabHistory: "Historique",
+  tabHelp: "Aide",
+  supportPage: "Assistance",
+  manualPdf: "Manuel en PDF",
+  aboutApp: "À propos",
+  moreOptions: "Plus d’options",
+  newStudyLong: "Nouvelle étude",
 };
 
 export default d;

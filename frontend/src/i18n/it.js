@@ -337,6 +337,8 @@ const d = {
   layout_semaforo_desc: "Tutto lo schermo cambia colore",
   layout_classic: "Classico",
   layout_classic_desc: "Il layout di sempre",
+  layout_ring: "Anello",
+  layout_ring_desc: "Stile app del telefono, con un anello del tempo",
   language: "Lingua",
   pmWarnPrefix: "DEVE FINIRE TRA",
   pmWarnSuffix: "",
@@ -393,6 +395,15 @@ const d = {
   update: "Aggiorna",
   errNoText: "Impossibile estrarre il testo dal PDF. È un PDF scansionato (immagine)?",
   errFormat: "Il formato dell’articolo di studio non è stato riconosciuto in questo PDF.",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Studio",
+  tabHistory: "Cronologia",
+  tabHelp: "Aiuto",
+  supportPage: "Assistenza",
+  manualPdf: "Manuale in PDF",
+  aboutApp: "Informazioni",
+  moreOptions: "Altre opzioni",
+  newStudyLong: "Nuovo studio",
 };
 
 export default d;

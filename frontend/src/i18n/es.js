@@ -337,6 +337,8 @@ const es = {
   layout_semaforo_desc: "Toda la pantalla cambia de color",
   layout_classic: "Clásico",
   layout_classic_desc: "El diseño de siempre",
+  layout_ring: "Anillo",
+  layout_ring_desc: "Estilo de app del móvil, con un anillo de tiempo",
   language: "Idioma",
   pmWarnPrefix: "EN",
   pmWarnSuffix: "DEBE CONCLUIR",
@@ -398,6 +400,15 @@ const es = {
   ptVariantLabel: "Versión del portugués",
   ptPortugal: "Portugal",
   ptBrazil: "Brasil",
+  // Aspecto de app (barra de pestañas)
+  tabStudy: "Estudio",
+  tabHistory: "Historial",
+  tabHelp: "Ayuda",
+  supportPage: "Soporte",
+  manualPdf: "Manual en PDF",
+  aboutApp: "Acerca de",
+  moreOptions: "Más opciones",
+  newStudyLong: "Nuevo estudio",
 };
 
 export default es;

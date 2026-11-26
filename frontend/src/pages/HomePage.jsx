@@ -29,7 +29,11 @@ import {
   Smartphone,
   ClipboardList,
   History,
+  MoreVertical,
+  Ellipsis,
 } from "lucide-react";
+import { getUi } from "@/utils/platform";
+import { AppTopBar, AppTabBar, AppIconButton, HelpScreen, HistoryScreen } from "@/components/AppShell";
 import { manualUrl, guideUrl } from "@/utils/manual";
 import { playStoreUrl, suggestPlayStoreApp } from "@/utils/donation";
 import { saveReport, openReport, loadHistory } from "@/utils/studyHistory";
@@ -162,7 +166,9 @@ export default function HomePage() {
   const [darkTheme, setDarkTheme] = useLocalStorageString('pdfTimer_darkTheme', defaultDarkTheme);
   const [lightTheme, setLightTheme] = useLocalStorageString('pdfTimer_lightTheme', defaultLightTheme);
   // Diseño del modo presentación: panel ordenado, semáforo o clásico
-  const [presentationLayout, setPresentationLayout] = useLocalStorageString('pdfTimer_presentationLayout', DEFAULT_LAYOUT);
+  const [webPresentationLayout, setWebPresentationLayout] = useLocalStorageString('pdfTimer_presentationLayout', DEFAULT_LAYOUT);
+  // En el móvil (aspecto de app) el estudio en marcha usa por defecto el diseño «Anillo»
+  const [appPresentationLayout, setAppPresentationLayout] = useLocalStorageString('pdfTimer_presentationLayoutApp', 'ring');
   // Ordenador (pantalla ancha): dos columnas. Móvil: el plan arriba y la barra de botones abajo.
   const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && !!window.matchMedia?.('(min-width: 1024px)')?.matches);
   useEffect(() => {
@@ -176,7 +182,73 @@ export default function HomePage() {
   // Get current theme config
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [settingsTab, setSettingsTab] = useState('tiempo');
-  const openSettings = (tab = 'tiempo') => { setSettingsTab(tab); setSettingsOpen(true); };
+  // Aspecto de app en el móvil y la tableta: barra de pestañas abajo (Estudio, Historial, Ayuda, Ajustes).
+  // El botón o gesto «atrás» del móvil vuelve a la pantalla anterior en lugar de salir de la app.
+  const ui = getUi();
+  const appMode = ui !== 'web';
+  const [appTab, setAppTabState] = useState('study');
+  const [historyReportId, setHistoryReportId] = useState(null);
+  const appTabRef = useRef('study');
+  const pendingTabRef = useRef(null);
+  useEffect(() => { appTabRef.current = appTab; }, [appTab]);
+  useEffect(() => {
+    if (!appMode) return undefined;
+    const onPop = () => {
+      const st = window.history.state || {};
+      const pending = pendingTabRef.current;
+      pendingTabRef.current = null;
+      if (pending && pending !== 'study') {
+        window.history.replaceState({ ...st, appTab: pending, appReport: null }, '');
+        setAppTabState(pending);
+        setHistoryReportId(null);
+        window.scrollTo(0, 0);
+        return;
+      }
+      setAppTabState(st.appTab || 'study');
+      setHistoryReportId(st.appReport || null);
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, [appMode]);
+  const goTab = useCallback((tab) => {
+    const st = window.history.state || {};
+    const prev = appTabRef.current;
+    if (tab === prev) {
+      if (st.appReport) window.history.back();
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (st.appReport) {
+      if (tab === 'study') { window.history.go(-2); return; }
+      pendingTabRef.current = tab;
+      window.history.back();
+      return;
+    }
+    if (tab === 'study') {
+      if (st.appTab) window.history.back(); else setAppTabState('study');
+      return;
+    }
+    if (st.appTab) window.history.replaceState({ ...st, appTab: tab }, '');
+    else window.history.pushState({ ...st, appTab: tab }, '');
+    setAppTabState(tab);
+    window.scrollTo(0, 0);
+  }, []);
+  const openHistoryReport = useCallback((id) => {
+    const st = window.history.state || {};
+    window.history.pushState({ ...st, appReport: id }, '');
+    setHistoryReportId(id);
+    window.scrollTo(0, 0);
+  }, []);
+  const presentationLayout = appMode ? appPresentationLayout : webPresentationLayout;
+  const setPresentationLayout = appMode ? setAppPresentationLayout : setWebPresentationLayout;
+  const openSettings = (tab = 'tiempo') => {
+    setSettingsTab(tab);
+    if (appMode) goTab('settings'); else setSettingsOpen(true);
+  };
+  useEffect(() => {
+    try { document.documentElement.dataset.mode = darkMode ? 'dark' : 'light'; } catch { /* sin DOM */ }
+  }, [darkMode]);
   const currentTheme = darkMode ? (darkThemes[darkTheme] || darkThemes.zinc) : null;
   // La variante cambia los grises de toda la app (también el modo presentación y los diálogos)
   useEffect(() => { applyDarkTheme(darkTheme, darkMode); }, [darkTheme, darkMode]);
@@ -543,6 +615,15 @@ export default function HomePage() {
       }
     }, 0);
   }, [isInIntroductionMode, isInReviewMode, isInClosingWordsMode, isTimerRunning, currentManualParagraph, currentReviewQuestion, presentationPhase]);
+
+  // Móvil (aspecto de app): al pulsar «Iniciar estudio» se abre directamente la pantalla del estudio en marcha
+  const [autoPresent, setAutoPresent] = useState(false);
+  useEffect(() => {
+    if (autoPresent && isInIntroductionMode) {
+      setAutoPresent(false);
+      enterPresentationMode();
+    }
+  }, [autoPresent, isInIntroductionMode, enterPresentationMode]);
 
   const exitPresentationMode = useCallback(() => {
     setIsPresentationMode(false);
@@ -1086,7 +1167,7 @@ export default function HomePage() {
   }) : null;
   const handleNextStep = () => {
     switch (nextStep?.action) {
-      case 'start': startIntroductionMode(); break;
+      case 'start': startIntroductionMode(); if (appMode) setAutoPresent(true); break;
       case 'firstParagraph': goToFirstParagraph(); break;
       case 'nextGroup': goToNextGroup(); break;
       case 'review': startReviewMode(); break;
@@ -1096,7 +1177,9 @@ export default function HomePage() {
       default: break;
     }
   };
-  const showActionBar = !!analysisResult && !isPresentationMode && !isDesktop && !!nextStep;
+  const showActionBar = !!analysisResult && !isPresentationMode && !isDesktop && !!nextStep && (!appMode || appTab === 'study');
+  // La barra de pestañas se esconde durante el estudio para no distraer (como las apps de cronómetro)
+  const tabBarVisible = appMode && !isPresentationMode && !(startTime && studyPhase !== 'finished');
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? currentTheme?.bg || 'bg-zinc-900' : 'bg-stone-50'}`}>
@@ -1108,7 +1191,40 @@ export default function HomePage() {
           </div>
         </div>
       )}
-      {/* Header */}
+      {appMode && (
+        <AppTopBar
+          ui={ui}
+          title={appTab === 'study' ? t('tabStudy')
+            : appTab === 'history' ? (historyReportId ? t('reportTitle') : t('studyHistory'))
+            : appTab === 'help' ? t('tabHelp') : t('settings')}
+          onBack={appTab === 'history' && historyReportId ? () => window.history.back() : undefined}
+          actions={appTab === 'study' && analysisResult ? (
+            <>
+              <AppIconButton icon={Maximize} label={t('presentation')} onClick={enterPresentationMode} testid="presentation-mode-btn" />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="app-icon-btn" aria-label={t('moreOptions')} title={t('moreOptions')} data-testid="app-more-btn">
+                    {ui === 'ios' ? <Ellipsis className="w-6 h-6" /> : <MoreVertical className="w-6 h-6" />}
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className={`rounded-xl min-w-[200px] ${darkMode ? 'bg-zinc-800 border-zinc-700' : ''}`}>
+                  <DropdownMenuItem onClick={exportToImage} data-testid="export-image-btn" className={`cursor-pointer py-2.5 ${darkMode ? 'text-zinc-100 focus:bg-zinc-700' : ''}`}>
+                    <FileImage className="w-4 h-4 mr-2" />{t("exportImage")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={exportToPDF} data-testid="export-pdf-btn" className={`cursor-pointer py-2.5 ${darkMode ? 'text-zinc-100 focus:bg-zinc-700' : ''}`}>
+                    <File className="w-4 h-4 mr-2" />{t("exportPdf")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={resetAll} data-testid="new-analysis-btn" className={`cursor-pointer py-2.5 ${darkMode ? 'text-zinc-100 focus:bg-zinc-700' : ''}`}>
+                    <RotateCcw className="w-4 h-4 mr-2" />{t("newStudyLong")}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
+          ) : null}
+        />
+      )}
+      {/* Header (ordenador) */}
+      {!appMode && (
       <header className={`border-b sticky top-0 z-50 shadow-sm backdrop-blur-md transition-colors duration-300 ${
         darkMode 
           ? `${currentTheme?.border || 'border-zinc-700'} ${currentTheme?.panel || 'bg-zinc-800'}/90` 
@@ -1251,8 +1367,18 @@ export default function HomePage() {
           </div>
         </div>
       </header>
+      )}
 
-      <main className={`max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8 ${showActionBar ? (studyPhase === 'paragraphs' || studyPhase === 'review' ? 'pb-48' : 'pb-32') : ''}`}>
+      <main
+        className={`max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8 ${showActionBar ? (studyPhase === 'paragraphs' || studyPhase === 'review' ? 'pb-48' : 'pb-32') : ''} ${appMode ? 'app-main' : ''}`}
+        style={appMode ? {
+          display: appTab === 'study' ? undefined : 'none',
+          paddingTop: 8,
+          paddingBottom: showActionBar
+            ? `calc(${tabBarVisible ? 'var(--app-tabbar-h) + ' : ''}env(safe-area-inset-bottom) + ${studyPhase === 'paragraphs' || studyPhase === 'review' ? 200 : 120}px)`
+            : (tabBarVisible ? 'calc(var(--app-tabbar-h) + env(safe-area-inset-bottom) + 24px)' : undefined),
+        } : undefined}
+      >
         {!analysisResult ? (
           <div className="space-y-4">
             {/* Plan de hoy (antes de cargar el artículo): compacto */}
@@ -1347,7 +1473,7 @@ export default function HomePage() {
               );
             })()}
 
-            {!manualCardHidden && (
+            {!appMode && !manualCardHidden && (
               <div
                 className={`rounded-2xl border shadow-sm p-4 flex items-start gap-3 ${
                   darkMode ? 'bg-zinc-800 border-brand-500/40' : 'bg-brand-50 border-brand-200'
@@ -1392,7 +1518,7 @@ export default function HomePage() {
                 </div>
               </div>
             )}
-            {showPlayCard && (
+            {!appMode && showPlayCard && (
               <div
                 className={`rounded-2xl border shadow-sm p-4 flex items-start gap-3 ${
                   darkMode ? 'bg-zinc-800 border-emerald-500/40' : 'bg-emerald-50 border-emerald-200'
@@ -1441,7 +1567,7 @@ export default function HomePage() {
               minutes={circuitVisitDuration}
               darkMode={darkMode}
             />
-            <button
+            {!appMode && <button
               onClick={() => openSettings('tiempo')}
               className={`w-full text-left rounded-2xl border shadow-sm p-4 flex items-center gap-3 transition-colors ${
                 darkMode ? 'bg-zinc-800 border-zinc-700 hover:bg-zinc-700' : 'bg-white border-slate-200 hover:bg-slate-50'
@@ -1458,8 +1584,8 @@ export default function HomePage() {
                 </span>
               </span>
               <span className="text-sm font-semibold text-brand-500 shrink-0">{t("change")}</span>
-            </button>
-            {(() => {
+            </button>}
+            {!appMode && (() => {
               // Historial de estudios: acceso visible desde la pantalla de inicio
               const history = loadHistory();
               const last = history[0];
@@ -1488,6 +1614,7 @@ export default function HomePage() {
               onFileSelect={handleFileUpload}
               fileInputRef={fileInputRef}
               darkMode={darkMode}
+              minimal={appMode}
             />
           </div>
         ) : (
@@ -1506,7 +1633,7 @@ export default function HomePage() {
                       <button onClick={() => openReport(lastReportId)} className="inline-flex items-center gap-1.5 rounded-xl px-3.5 h-9 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold" data-testid="report-open">
                         <ClipboardList className="w-4 h-4" /> {t('viewReport')}
                       </button>
-                      <button onClick={() => openReport(null)} className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 h-9 border text-sm font-bold ${darkMode ? 'border-emerald-400/60 text-emerald-300 hover:bg-zinc-700' : 'border-emerald-300 text-emerald-700 hover:bg-emerald-100'}`} data-testid="report-history">
+                      <button onClick={() => (appMode ? goTab('history') : openReport(null))} className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 h-9 border text-sm font-bold ${darkMode ? 'border-emerald-400/60 text-emerald-300 hover:bg-zinc-700' : 'border-emerald-300 text-emerald-700 hover:bg-emerald-100'}`} data-testid="report-history">
                         <History className="w-4 h-4" /> {t('studyHistory')}
                       </button>
                     </div>
@@ -1694,8 +1821,21 @@ export default function HomePage() {
         )}
       </main>
 
+      {appMode && appTab === 'history' && (
+        <main className="app-main" style={{ paddingBottom: 'calc(var(--app-tabbar-h) + env(safe-area-inset-bottom) + 24px)' }}>
+          <HistoryScreen selectedId={historyReportId} onSelect={openHistoryReport} />
+        </main>
+      )}
+      {appMode && appTab === 'help' && (
+        <main className="app-main" style={{ paddingBottom: 'calc(var(--app-tabbar-h) + env(safe-area-inset-bottom) + 24px)' }}>
+          <HelpScreen onWhatsNew={() => setWhatsNewOpen(true)} />
+        </main>
+      )}
+      {tabBarVisible && <AppTabBar tab={appTab} onChange={goTab} />}
+
       {showActionBar && (
         <StudyActionBar
+          aboveTabBar={tabBarVisible}
           nextStep={nextStep}
           onNext={handleNextStep}
           canComment={studyPhase === 'paragraphs' || studyPhase === 'review'}
@@ -1710,7 +1850,10 @@ export default function HomePage() {
       )}
 
       <PtVariantDialog darkMode={darkMode} />
+      {(!appMode || appTab === 'settings') && (
+      <div className={appMode ? 'app-main' : undefined} style={appMode ? { paddingBottom: 'calc(var(--app-tabbar-h) + env(safe-area-inset-bottom) + 24px)' } : undefined}>
       <SettingsSheet
+        inline={appMode}
         open={settingsOpen}
         onOpenChange={setSettingsOpen}
         tab={settingsTab}
@@ -1766,6 +1909,8 @@ export default function HomePage() {
         meetingStart={meetingStart} setMeetingStart={setMeetingStart}
         onOpenWhatsNew={() => { setSettingsOpen(false); setWhatsNewOpen(true); }}
       />
+      </div>
+      )}
       <WhatsNewDialog open={whatsNewOpen} onClose={closeWhatsNew} darkMode={darkMode} />
 
       {/* Presentation Mode Overlay */}
