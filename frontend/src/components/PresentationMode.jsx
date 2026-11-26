@@ -515,7 +515,12 @@ export default function PresentationMode({
   if (layout === "ring") {
     const state = colorClass.includes("green") ? "ok" : colorClass.includes("yellow") ? "grace"
       : colorClass.includes("red") ? "over" : colorClass.includes("emerald") ? "done" : "idle";
-    const ratio = estimatedTime > 0 ? Math.min(1, phaseElapsedTime / estimatedTime) : (studyStarted ? 1 : 0);
+    // El anillo avanza en verde hasta el tiempo previsto; en la prórroga vuelve a llenarse en amarillo
+    // (de 0 al final de la prórroga); en rojo queda completo.
+    const ratio = !(estimatedTime > 0) ? (studyStarted ? 1 : 0)
+      : state === "grace" ? Math.min(1, Math.max(0, (phaseElapsedTime - estimatedTime) / (estimatedTime * (GRACE_RATIO - 1))))
+      : state === "over" || state === "done" ? 1
+      : Math.min(1, phaseElapsedTime / estimatedTime);
     const R = 120, C = 2 * Math.PI * R;
     const nextLabel = critical ? t("nextNow") : nextInfo?.kicker;
     return (
