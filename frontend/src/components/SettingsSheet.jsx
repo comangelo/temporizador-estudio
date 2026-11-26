@@ -13,6 +13,20 @@ import { manualUrl } from "@/utils/manual";
 
 const ThemeCtx = createContext({});
 
+/** Panel lateral (ordenador) o pantalla normal (móvil, modo app). */
+function Frame({ inline, open, onOpenChange, className, children }) {
+  if (inline) return <div className="app-settings" data-testid="settings-screen">{children}</div>;
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent side="right"
+        className={`w-full sm:max-w-md p-0 flex flex-col gap-0 ${className} [&>button]:text-current [&>button]:opacity-80 [&>button]:top-5`}
+        data-testid="settings-sheet">
+        {children}
+      </SheetContent>
+    </Sheet>
+  );
+}
+
 function Section({ children, testid }) {
   const c = useContext(ThemeCtx);
   return (
@@ -148,6 +162,8 @@ export function SettingsSheet({
   darkTheme, setDarkTheme,
   lightTheme, setLightTheme,
   presentationLayout, setPresentationLayout,
+  // En el móvil (modo app) los ajustes son una pantalla de la barra inferior, no un panel lateral
+  inline = false,
 }) {
   const c = darkMode
     ? {
@@ -180,21 +196,22 @@ export function SettingsSheet({
 
   return (
     <ThemeCtx.Provider value={c}>
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right"
-        className={`w-full sm:max-w-md p-0 flex flex-col gap-0 ${c.sheet} [&>button]:text-current [&>button]:opacity-80 [&>button]:top-5`}
-        data-testid="settings-sheet">
-        <div className="px-5 pt-5 pb-3">
-          <SheetTitle className={`flex items-center gap-2 text-lg font-bold ${c.text}`}>
-            <Settings className="w-5 h-5 text-brand-500" /> {t("settings")}
-          </SheetTitle>
-          <SheetDescription className={`text-xs ${c.muted}`}>{t("settingsSavedHere")}</SheetDescription>
-          <a href={manualUrl()} target="_blank" rel="noopener"
+    <Frame inline={inline} open={open} onOpenChange={onOpenChange} className={c.sheet}>
+        <div className={inline ? "px-4 pt-1 pb-3" : "px-5 pt-5 pb-3"}>
+          {!inline && (
+            <SheetTitle className={`flex items-center gap-2 text-lg font-bold ${c.text}`}>
+              <Settings className="w-5 h-5 text-brand-500" /> {t("settings")}
+            </SheetTitle>
+          )}
+          {inline
+            ? <p className={`text-xs ${c.muted}`}>{t("settingsSavedHere")}</p>
+            : <SheetDescription className={`text-xs ${c.muted}`}>{t("settingsSavedHere")}</SheetDescription>}
+          {!inline && <a href={manualUrl()} target="_blank" rel="noopener"
             className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-500 hover:text-brand-600"
             data-testid="settings-manual-link">
             <BookOpen className="w-4 h-4" /> {t("userManual")}
-          </a>
-          {onOpenWhatsNew && (
+          </a>}
+          {onOpenWhatsNew && !inline && (
             <button onClick={onOpenWhatsNew} className="mt-2 ml-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-500 hover:text-brand-600" data-testid="settings-whats-new">
               <Sparkles className="w-4 h-4" /> {t("whatsNewLink")}
             </button>
@@ -214,7 +231,7 @@ export function SettingsSheet({
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-5 pb-8 space-y-4">
+        <div className={inline ? "px-4 pb-8 space-y-4" : "flex-1 overflow-y-auto px-5 pb-8 space-y-4"}>
           {tab === "tiempo" && (
             <>
               <Section testid="settings-section-tiempo">
@@ -454,8 +471,7 @@ export function SettingsSheet({
             </>
           )}
         </div>
-      </SheetContent>
-    </Sheet>
+    </Frame>
     </ThemeCtx.Provider>
   );
 }

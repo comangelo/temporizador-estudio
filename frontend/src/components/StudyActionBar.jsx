@@ -18,6 +18,7 @@ export function StudyActionBar({
   onPresentation,
   darkMode = false,
   urgency = "none", // "none" | "over" | "critical"
+  aboveTabBar = false, // modo app: encima de la barra de pestañas
 }) {
   if (!nextStep) return null;
   const isStart = nextStep.action === "start";
@@ -30,6 +31,7 @@ export function StudyActionBar({
       className={`lg:hidden fixed inset-x-0 bottom-0 z-40 border-t px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_rgba(0,0,0,0.12)] ${
         darkMode ? "bg-zinc-900/95 border-zinc-700" : "bg-white/95 border-slate-200"
       } backdrop-blur`}
+      style={aboveTabBar ? { bottom: "calc(var(--app-tabbar-h) + env(safe-area-inset-bottom))", paddingBottom: "0.75rem" } : undefined}
       data-testid="study-action-bar"
     >
       <div className="max-w-xl mx-auto flex flex-col gap-2">

@@ -10,7 +10,7 @@ import { manualUrl } from "@/utils/manual";
  *   soltar en cualquier parte de la pantalla, ver HomePage.)
  * - Donación (solo web) y pie con aviso legal, privacidad y manual.
  */
-export function UploadZone({ onFileSelect, fileInputRef, darkMode = false }) {
+export function UploadZone({ onFileSelect, fileInputRef, darkMode = false, minimal = false }) {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) onFileSelect(file);
@@ -29,6 +29,8 @@ export function UploadZone({ onFileSelect, fileInputRef, darkMode = false }) {
         data-testid="file-input"
       />
 
+      {/* En el móvil (modo app) la donación y el pie están en la pestaña «Ayuda» */}
+      {minimal ? null : (<>
       {/* Donación voluntaria (solo web; nunca dentro de la app de Google Play) */}
       {donationAvailable() && (
         <div className="mt-8 text-center">
@@ -64,6 +66,7 @@ export function UploadZone({ onFileSelect, fileInputRef, darkMode = false }) {
         )}
         {' '}· © safeSingleMark S.L.
       </p>
+      </>)}
     </div>
   );
 }
