@@ -166,7 +166,9 @@ export default function HomePage() {
   const [darkTheme, setDarkTheme] = useLocalStorageString('pdfTimer_darkTheme', defaultDarkTheme);
   const [lightTheme, setLightTheme] = useLocalStorageString('pdfTimer_lightTheme', defaultLightTheme);
   // Diseño del modo presentación: panel ordenado, semáforo o clásico
-  const [presentationLayout, setPresentationLayout] = useLocalStorageString('pdfTimer_presentationLayout', DEFAULT_LAYOUT);
+  const [webPresentationLayout, setWebPresentationLayout] = useLocalStorageString('pdfTimer_presentationLayout', DEFAULT_LAYOUT);
+  // En el móvil (aspecto de app) el estudio en marcha usa por defecto el diseño «Anillo»
+  const [appPresentationLayout, setAppPresentationLayout] = useLocalStorageString('pdfTimer_presentationLayoutApp', 'ring');
   // Ordenador (pantalla ancha): dos columnas. Móvil: el plan arriba y la barra de botones abajo.
   const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && !!window.matchMedia?.('(min-width: 1024px)')?.matches);
   useEffect(() => {
@@ -238,6 +240,8 @@ export default function HomePage() {
     setHistoryReportId(id);
     window.scrollTo(0, 0);
   }, []);
+  const presentationLayout = appMode ? appPresentationLayout : webPresentationLayout;
+  const setPresentationLayout = appMode ? setAppPresentationLayout : setWebPresentationLayout;
   const openSettings = (tab = 'tiempo') => {
     setSettingsTab(tab);
     if (appMode) goTab('settings'); else setSettingsOpen(true);
@@ -611,6 +615,15 @@ export default function HomePage() {
       }
     }, 0);
   }, [isInIntroductionMode, isInReviewMode, isInClosingWordsMode, isTimerRunning, currentManualParagraph, currentReviewQuestion, presentationPhase]);
+
+  // Móvil (aspecto de app): al pulsar «Iniciar estudio» se abre directamente la pantalla del estudio en marcha
+  const [autoPresent, setAutoPresent] = useState(false);
+  useEffect(() => {
+    if (autoPresent && isInIntroductionMode) {
+      setAutoPresent(false);
+      enterPresentationMode();
+    }
+  }, [autoPresent, isInIntroductionMode, enterPresentationMode]);
 
   const exitPresentationMode = useCallback(() => {
     setIsPresentationMode(false);
@@ -1154,7 +1167,7 @@ export default function HomePage() {
   }) : null;
   const handleNextStep = () => {
     switch (nextStep?.action) {
-      case 'start': startIntroductionMode(); break;
+      case 'start': startIntroductionMode(); if (appMode) setAutoPresent(true); break;
       case 'firstParagraph': goToFirstParagraph(); break;
       case 'nextGroup': goToNextGroup(); break;
       case 'review': startReviewMode(); break;
