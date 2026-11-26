@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+        <meta name="theme-color" content="#ea580c" />
+        <meta name="description" content="Temporizador de Estudio: reparte el tiempo del estudio semanal entre párrafos y preguntas" />
+        
+        <!-- iOS PWA Support -->
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Temporizador" />
+        <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon-180.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon-180.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="%PUBLIC_URL%/apple-touch-icon-152.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="%PUBLIC_URL%/apple-touch-icon-120.png" />
+        
+        <!-- Splash screens for iOS -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        
+        <!-- Android/General PWA -->
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <link rel="icon" type="image/png" sizes="48x48" href="%PUBLIC_URL%/favicon-48.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="%PUBLIC_URL%/icon-192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="%PUBLIC_URL%/icon-512.png" />
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet" />
+        <title>Temporizador de Estudio</title>
+        <script>
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then((registration) => {
+                            console.log('SW registered:', registration);
+                        })
+                        .catch((error) => {
+                            console.log('SW registration failed:', error);
+                        });
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+        <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+    </body>
+</html>

@@ -1,0 +1,77 @@
+{
+  "id": "/",
+  "short_name": "Temporizador",
+  "name": "Temporizador de Estudio",
+  "description": "Gestiona el tiempo para conducir el artículo de estudio semanal en 60 minutos. Analiza el PDF, calcula la lectura y reparte el tiempo entre párrafos y preguntas.",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#ea580c",
+  "background_color": "#fafaf9",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": [
+    "utilities",
+    "productivity",
+    "education"
+  ],
+  "prefer_related_applications": false,
+  "screenshots": [
+    {
+      "src": "manual/es/05-resumen.webp",
+      "sizes": "824x1720",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Resumen del artículo y reparto del tiempo"
+    },
+    {
+      "src": "manual/es/12-pres-panel.webp",
+      "sizes": "824x1720",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Modo presentación durante el estudio"
+    },
+    {
+      "src": "manual/es/20-informe.webp",
+      "sizes": "824x1720",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Informe del estudio"
+    }
+  ],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "handle_links": "preferred",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}
