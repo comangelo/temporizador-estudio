@@ -487,23 +487,38 @@ html[data-mode="dark"] .pm-ring[data-state="idle"] { --state: #a8a29e; --state-f
 html[data-mode="dark"] .pm-ring[data-state="done"] { --state: #34d399; --state-fg: #052e16; --state-text: #6ee7b7; }
 html[data-ui="ios"] .pm-ring { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; }
 
-.pm-ring-top { position: relative; display: flex; align-items: center; gap: 4px; min-height: 64px; }
+.pm-ring-top { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; min-height: 52px; }
+.pm-top-spacer { flex: 1; }
+.pm-top-actions { order: 2; display: flex; align-items: center; }
 .pm-ring-icon { width: 48px; height: 48px; border-radius: 24px; display: inline-flex; align-items: center; justify-content: center; color: var(--ring-fg); flex: none; }
 .pm-ring-icon svg { width: 24px; height: 24px; }
 .pm-ring-icon:active { background: var(--ring-tonal); }
 html[data-ui="ios"] .pm-ring-icon { width: 36px; height: 36px; background: var(--ring-tonal); margin: 0 4px; }
 html[data-ui="ios"] .pm-ring-icon svg { width: 18px; height: 18px; }
-.pm-ring-heading { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
-.pm-ring-title { font-size: 17px; font-weight: 600; line-height: 22px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-.pm-ring-sub { font-size: 13px; color: var(--ring-muted); font-variant-numeric: tabular-nums; }
+/* Horas (empezó · ahora · termina · restante), en una tarjeta como en «Semáforo» y «Panel» */
+.pm-times { order: 3; flex-basis: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 8px 6px; border-radius: 18px; background: var(--theme-card); box-shadow: 0 1px 6px rgba(0,0,0,.08); text-align: center; }
+.pm-times.has-start { grid-template-columns: repeat(4, 1fr); }
+.pm-time { display: flex; flex-direction: column; min-width: 0; }
+.pm-time span { font-size: clamp(9px, 2.7vw, 12px); font-weight: 600; letter-spacing: .2px; text-transform: uppercase; color: var(--ring-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pm-time b { font-size: clamp(20px, 6.4vw, 34px); font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; color: var(--ring-fg); }
+.pm-time.is-start b { color: var(--ring-muted); }
+.pm-time.is-end b { color: #b45309; }
+.pm-time.is-left b { color: rgb(var(--brand-600)); }
+html[data-mode="dark"] .pm-time.is-end b { color: #facc15; }
+html[data-mode="dark"] .pm-time.is-left b { color: rgb(var(--brand-400)); }
+/* Título del tramo, grande, como en los otros diseños */
+.pm-phase { display: flex; flex-direction: column; align-items: center; gap: 2px; max-width: 100%; }
+.pm-phase-title { font-size: clamp(24px, 7.5vw, 40px); font-weight: 900; line-height: 1.05; letter-spacing: .5px; text-transform: uppercase; }
+.pm-phase-sub { font-size: 17px; color: var(--ring-muted); }
 .pm-ring-bar { padding: 12px 8px 0; }
 .pm-ring-body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 16px; }
-.pm-ring-body.is-landscape { flex-direction: row; align-items: center; }
-.pm-ring-center { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
+.pm-ring-body.is-landscape { flex-direction: row; align-items: stretch; }
+.pm-ring-body.is-landscape .pm-ring-actions { align-self: center; }
+.pm-ring-center { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: safe center; gap: 10px; padding-top: 10px; text-align: center; }
 .pm-ring-chip { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 16px; border-radius: 17px; background: var(--ring-chip); color: var(--ring-chip-fg); font-size: 14px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; }
 .pm-ring-chip svg { width: 18px; height: 18px; }
-.pm-ring-dial { position: relative; width: min(74vw, 46vh, 330px); aspect-ratio: 1; container-type: inline-size; }
-.pm-ring-body.is-landscape .pm-ring-dial { width: min(38vw, 56vh, 360px); }
+.pm-ring-dial { position: relative; width: min(62vw, 30vh, 330px); aspect-ratio: 1; container-type: inline-size; }
+.pm-ring-body.is-landscape .pm-ring-dial { width: min(34vw, 50vh, 360px); }
 .pm-ring-dial svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .pm-ring-track { fill: none; stroke: var(--ring-track); stroke-width: 16; }
 .pm-ring-progress { fill: none; stroke: var(--ring); stroke-width: 16; stroke-linecap: round; transition: stroke-dasharray 1s linear, stroke .5s; }
@@ -556,7 +571,7 @@ html[data-ui="ios"] [data-testid="study-action-bar"] button { border-radius: 14p
 /* Diseño «Barra»: cuenta atrás con una barra gruesa; la zona rayada del final es la prórroga */
 .pm-bar { width: min(100%, 520px); display: flex; flex-direction: column; align-items: center; padding: 0 8px; container-type: inline-size; overflow: hidden; }
 .pm-bar-label { font-size: 14px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--ring-muted); }
-.pm-bar-clock { font-size: 64px; font-size: min(22cqw, 15vh, 130px); font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -2px; color: var(--ring-fg); }
+.pm-bar-clock { font-size: 64px; font-size: min(22cqw, 13vh, 130px); font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -2px; color: var(--ring-fg); }
 .pm-ring:not([data-state="ok"]):not([data-state="idle"]) .pm-bar-clock { color: var(--state-text); }
 .pm-bar .pm-ring-of { font-size: 20px; }
 .pm-bar-track { position: relative; width: 100%; height: 30px; margin-top: 22px; border-radius: 15px; overflow: hidden; background: var(--ring-track); }
@@ -576,19 +591,29 @@ html[data-ui="ios"] .pm-bar-clock { font-weight: 300; }
 /* La barra del estudio, sobre una tarjeta propia para que no se confunda con el color que sube */
 .pm-layout-fill .pm-ring-bar { margin: 8px 0 0; padding: 12px 14px 8px; border-radius: 18px; background: var(--theme-card); box-shadow: 0 2px 10px rgba(0,0,0,.12), 0 0 0 1px color-mix(in srgb, var(--state) 35%, transparent); }
 .pm-fill-time { display: flex; flex-direction: column; align-items: center; }
-.pm-fill-clock { font-size: 64px; font-size: min(24vw, 16vh, 170px); font-weight: 400; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -2px; }
+.pm-fill-clock { font-size: 64px; font-size: min(24vw, 14vh, 170px); font-weight: 400; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -2px; }
 .pm-layout-fill .pm-ring-of { font-size: 20px; }
 html[data-ui="ios"] .pm-fill-clock { font-weight: 300; }
 
+/* En horizontal las horas van en la misma fila que los botones de arriba */
+@media (orientation: landscape) {
+  .pm-top-spacer { display: none; }
+  .pm-times { order: 1; flex: 1; flex-basis: auto; margin: 0 8px; }
+}
 /* Móvil en horizontal: menos alto, así que el anillo y los textos se recogen */
 @media (orientation: landscape) and (max-height: 520px) {
-  .pm-ring-top { min-height: 52px; }
+  .pm-ring-top { min-height: 44px; }
+  .pm-times { padding: 4px 6px; }
+  .pm-time span { font-size: 10px; }
+  .pm-time b { font-size: 18px; }
+  .pm-phase-title { font-size: 20px; }
+  .pm-phase-sub { font-size: 13px; }
   .pm-ring-bar { padding-top: 6px; }
   .pm-ring-bar p { display: none; }
-  .pm-ring-body.is-landscape .pm-ring-dial { width: min(38vw, 52vh, 360px); }
-  .pm-ring-center { gap: 8px; justify-content: flex-start; padding-top: 8px; }
+  .pm-ring-body.is-landscape .pm-ring-dial { width: min(30vw, 46vh, 360px); }
+  .pm-ring-center { gap: 6px; padding-top: 4px; }
   .pm-ring-chip { height: 28px; font-size: 12px; }
-  .pm-bar-clock { font-size: min(22cqw, 22vh); }
+  .pm-bar-clock { font-size: min(22cqw, 20vh); }
   .pm-bar-track { height: 22px; margin-top: 10px; }
-  .pm-fill-clock { font-size: min(18vw, 28vh); }
+  .pm-fill-clock { font-size: min(18vw, 24vh); }
 }
