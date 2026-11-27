@@ -573,6 +573,8 @@ html[data-ui="ios"] .pm-bar-clock { font-weight: 300; }
 .pm-layout-fill > :not(.pm-fill-level) { position: relative; z-index: 1; }
 /* La barra de arriba por encima del resto, para que el menú de diseños se pueda pulsar */
 .pm-layout-fill > .pm-ring-top { z-index: 2; }
+/* La barra del estudio, sobre una tarjeta propia para que no se confunda con el color que sube */
+.pm-layout-fill .pm-ring-bar { margin: 8px 0 0; padding: 12px 14px 8px; border-radius: 18px; background: var(--theme-card); box-shadow: 0 2px 10px rgba(0,0,0,.12), 0 0 0 1px color-mix(in srgb, var(--state) 35%, transparent); }
 .pm-fill-time { display: flex; flex-direction: column; align-items: center; }
 .pm-fill-clock { font-size: 64px; font-size: min(24vw, 16vh, 170px); font-weight: 400; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -2px; }
 .pm-layout-fill .pm-ring-of { font-size: 20px; }
