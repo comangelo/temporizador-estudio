@@ -532,21 +532,35 @@ export default function PresentationMode({
         )}
         <div className="pm-ring-top">
           <button className="pm-ring-icon" onClick={onExit} aria-label={t("exit")} data-testid="presentation-exit"><X /></button>
-          <div className="pm-ring-heading">
-            <span className="pm-ring-title" data-testid="presentation-phase-title">{phaseInfo.title}</span>
-            <span className="pm-ring-sub">
-              {studyStarted && phase !== PHASES.FINISHED
-                ? `${t("ends")} ${formatClockTime(shownEndTime)} · ${t("remaining").toLowerCase()} ${formatTime(Math.max(0, remainingTime))}`
-                : phaseInfo.subtitle}
-            </span>
-          </div>
-          <div className="flex items-center">
+          <div className="pm-top-spacer" />
+          <div className="pm-top-actions">
             <button className="pm-ring-icon" onClick={() => setShowLayoutMenu((v) => !v)} aria-label={t("changeLayout")} data-testid="presentation-layout-button"><LayoutTemplate /></button>
             {studyStarted && phase !== PHASES.FINISHED && (
               <button className="pm-ring-icon" onClick={onToggleTimer} aria-label={isTimerRunning ? t("pause") : t("resume")} data-testid="presentation-toggle-timer">
                 {isTimerRunning ? <Pause /> : <Play />}
               </button>
             )}
+          </div>
+          {/* Horas, como en «Semáforo» y «Panel»: empezó · ahora · termina · restante */}
+          <div className={`pm-times ${startTime && studyStarted ? "has-start" : ""}`} data-testid="presentation-times">
+            {startTime && studyStarted && (
+              <div className="pm-time is-start">
+                <span>{t("pmStarted")}</span>
+                <b data-testid="presentation-start-time">{formatClockTime(new Date(startTime))}</b>
+              </div>
+            )}
+            <div className="pm-time is-now">
+              <span>{t("currentTime")}</span>
+              <b>{formatClockTime(currentTime)}</b>
+            </div>
+            <div className="pm-time is-end">
+              <span>{t("ends")}</span>
+              <b data-testid="presentation-end-time">{formatClockTime(shownEndTime)}</b>
+            </div>
+            <div className="pm-time is-left">
+              <span>{t("remaining")}</span>
+              <b data-testid="presentation-remaining">{formatTime(Math.max(0, remainingTime))}</b>
+            </div>
           </div>
           {showLayoutMenu && (
             <div className="absolute right-3 top-16 z-30 bg-zinc-900 border border-zinc-700 rounded-2xl p-2 shadow-2xl w-60" data-testid="presentation-layout-menu">
@@ -567,6 +581,10 @@ export default function PresentationMode({
         ) : null}
         <div className={`pm-ring-body ${isLandscape ? "is-landscape" : ""}`}>
           <div className="pm-ring-center">
+            <div className="pm-phase">
+              <span className="pm-phase-title" data-testid="presentation-phase-title">{phaseInfo.title}</span>
+              {phaseInfo.subtitle && <span className="pm-phase-sub">{phaseInfo.subtitle}</span>}
+            </div>
             <span className="pm-ring-chip" data-testid="presentation-status">
               {state === "ok" || state === "done" ? <CheckCircle2 /> : state === "idle" ? <Play /> : <AlertCircle />}
               {indicatorText}
